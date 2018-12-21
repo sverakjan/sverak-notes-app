@@ -1,0 +1,9 @@
+{
+  "firebase": "gkeep-vueifire3",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
