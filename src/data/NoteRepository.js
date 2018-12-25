@@ -6,7 +6,6 @@ import EventEmitter from 'events'
 class NoteRepository extends EventEmitter {
   get uid () {
 		return this.ref.getAuth().uid
-		
   }
   get notesRef () {
 		//return this.ref.child(`users/${this.uid}/notes`)
@@ -14,6 +13,7 @@ class NoteRepository extends EventEmitter {
   }
   constructor () {
 		super()
+		var database = firebase.database();
   }
   // creates a note
   create ({title = '', content = ''}, onComplete) {
@@ -30,15 +30,15 @@ class NoteRepository extends EventEmitter {
   }
   // attach listeners to Firebase
   attachFirebaseListeners () {
-    //this.notesRef.on('child_added', this.onAdded, this)
-    //this.notesRef.on('child_removed', this.onRemoved, this)
-    //this.notesRef.on('child_changed', this.onChanged, this)
+    this.notesRef.on('child_added', this.onAdded, this)
+    this.notesRef.on('child_removed', this.onRemoved, this)
+    this.notesRef.on('child_changed', this.onChanged, this)
   }
   // dettach listeners from Firebase
   detachFirebaseListeners () {
-    //this.notesRef.off('child_added', this.onAdded, this)
-    //this.notesRef.off('child_removed', this.onRemoved, this)
-    //this.notesRef.off('child_changed', this.onChanged, this)
+    this.notesRef.off('child_added', this.onAdded, this)
+    this.notesRef.off('child_removed', this.onRemoved, this)
+    this.notesRef.off('child_changed', this.onChanged, this)
   }
   onAdded (snapshot) {
     // process data
@@ -57,7 +57,7 @@ class NoteRepository extends EventEmitter {
   // processes the snapshots to consistent note with key
   snapshotToNote (snapshot) {
     // we will need the key often, so we always want to have the key included in the note
-    let key = snapshot.key()
+    let key = snapshot.key
     let note = snapshot.val()
     note.key = key
     return note

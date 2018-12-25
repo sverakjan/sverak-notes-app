@@ -31,7 +31,10 @@ export default {
         return
       }
       this.user = {
-        userTitle: '', // if there's no displayName, take the email, if there's no email, use an empty string
+       userTitle: ''// if there's no displayName, take the email, if there's no email, use an empty string
+				
+				//userTitle: authed[authed.provider].displayName || authed[authed.provider].email || '' // if there's no displayName, take the email, if there's no email, use an empty string
+				//imageUrl: authed[authed.provider].profileImageURL
       }
     },
     signOut () {
@@ -40,7 +43,9 @@ export default {
     }
   },
   ready () {
-    Auth.onAuth(this.processUser) // processUser everytime auth state changes (signs in or out)
+		Auth.onAuth(this.processUser) // processUser everytime auth state changes (signs in or out)
+		console.log(Auth.onAuth());
+
 		this.processUser(Auth.getAuth()) // processUser in case user is already signed in
   }
 }
@@ -96,7 +101,7 @@ header a:focus, header a:hover {
 }
 @media screen and (max-width: 1200px) {
   header span{
-    display: none;
+    /* display: none; */
   }
 }
 @media screen and (max-width: 720px) {

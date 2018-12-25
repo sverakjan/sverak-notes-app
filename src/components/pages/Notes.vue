@@ -9,6 +9,76 @@
 
 <div class="item-section">
 			<h2 class="item-heading">
+				Inicializace databáze
+			</h2>
+
+			<div class="guide-item">
+				<h3>Importování Firebase</h3>
+			<pre>
+
+<span class="file-line">Firebase.js:1</span>
+
+import * as firebase from "firebase";
+			</pre>
+
+			<p>
+				Firebase je součástí NPM jako balíče, proto můžeme Firebase jednoduše přidat do projektu pomocí příkazu
+				<code>npm i firebase --save</code>.
+			</p>
+
+			</div>
+
+
+
+			<div class="guide-item">
+				<h3>Configurace</h3>
+			<pre>
+
+<span class="file-line">Firebase.js:3</span>
+
+const config = {
+  apiKey: "AIzaSyDhvdDaXVBc25RVdZA4DKdMurqZUd1ejUE",
+  authDomain: "sverak-notes-app.firebaseapp.com",
+  databaseURL: "https://sverak-notes-app.firebaseio.com",
+  projectId: "sverak-notes-app"
+};
+			</pre>
+
+<p>
+	<code>apiKey:</code> nejdůležitější položka při inicializaci, bez vygenerovaného klíče není možné přistupovat k API
+</p>
+<p>
+	<code>authDomain:</code> doména k autentizaci
+</p>
+<p>
+	<code>databaseURL:</code> adresa databáze
+</p>
+<p>
+	<code>projectId:</code> Jedinečné id projektu, vybírané při tvorbě projektu v administraci firebase.
+</p>
+
+			</div>
+
+				<div class="guide-item">
+				<h3>Export inicializace</h3>
+			<pre>
+
+<span class="file-line">Firebase.js:12</span>
+
+export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+			</pre>
+
+<p>Přístup askf skjf ks ks z jinech souborů .. bez toho aby se to inicializovalo dvakrat</p>
+			</div>
+
+
+			
+
+</div>
+
+
+<div class="item-section">
+			<h2 class="item-heading">
 				Přidání poznámky
 			</h2>
 
@@ -83,7 +153,7 @@ createNote () {
 				<h3>Přidání poznámky, funkce <code><strong>noteRepository.create()</strong></code></h3>
 			<pre>
 
-<span class="file-line">NoteRepository.js:18</span>
+<span class="file-line">NoteRepository.js:19</span>
 
 create ({title = '', content = ''}, onComplete) {
   this.notesRef.push({title, content}, onComplete)
@@ -109,19 +179,21 @@ create ({title = '', content = ''}, onComplete) {
 
 constructor () {
   super()
-  this.ref = new Firebase('https://sverak-notes-app.firebaseio.com')   
+  var database = firebase.database(); 
 }
 			</pre>
 
 			<p>
-			<strong>Načtení záznamů z databáze do pole zmíněného výše</strong>
+			<strong>Reference pro zápis a čtení z databáze</strong>
 			</p>
+
+			<p>V tomto případě, budou všechny zápisy do databáze a čtení z databáze na větvi <code>notes</code></p>
 
 			<pre>
 <span class="file-line">NoteRepository.js:10</span>
 
 get notesRef () {
-  return this.ref.child(`users/${this.uid}/notes`)
+  return firebase.database().ref(`notes`);
 }
 			</pre>
 

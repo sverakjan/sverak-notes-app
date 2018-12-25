@@ -2,10 +2,11 @@ import firebase from './firebase';
 
 export default {
 	//calls callback when user signs in or out
-  onAuth (authCallback) {
+  onAuth () {
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
-			return(user)
+				//console.log(user.email);
+				return(user.email)
 			}
 		});
 	},
