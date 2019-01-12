@@ -15,7 +15,7 @@
     </div>
     <div v-show="!wantsToSignUp" class="clearfix btn-group">
       <button type="submit">Přihlásit se</button>
-      <button type="button" v-on:click="wantsToSignUp = true">Registrovat</button>
+      <button class="disabled" type="button" v-on:click="wantsToSignUp = false">Registrovat</button>
     </div>
     <div v-show="wantsToSignUp">
       <button type="submit" class="signup-submit">Registrovat</button>
@@ -101,6 +101,7 @@ export default {
   padding: 4px 6px;
   margin: 0;
   border-radius: 3px;
+	cursor: pointer;
 }
 .auth-form .btn-group button{
   border-radius: 3px 0 0 3px;
@@ -111,6 +112,13 @@ export default {
   border-radius: 0 3px 3px 0;
   border-left: none;
 }
+
+.auth-form button.disabled{
+	background: #ccc;
+	color: #999;
+	cursor: default;
+}
+
 .auth-form .signup-submit{
   width: 100%;
 }

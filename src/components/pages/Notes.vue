@@ -68,13 +68,106 @@ const config = {
 export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 			</pre>
 
-<p>Přístup askf skjf ks ks z jinech souborů .. bez toho aby se to inicializovalo dvakrat</p>
+<p>Tento export nám umožnuje přístup k databázi, bez nutnosti inicializace v každém souboru, kde k téže databázi přistupujeme a tím zabraňuje redundantnosti a možným chybám s tím spojeným.</p>
 			</div>
 
 
 			
 
 </div>
+
+<div class="item-section">
+	<h2 class="item-heading">Výpis poznámek</h2>
+<div class="guide-item">
+				<h3>Přístup k poznámkám</h3>
+				<p>
+
+				</p>
+				<p>
+			<strong>Přístup ke konkrétní databázi:</strong>
+			</p>
+
+			<pre>
+<span class="file-line">NoteRepository.js:13</span>
+
+constructor () {
+  super()
+  var database = firebase.database(); 
+}
+			</pre>
+
+			<p>
+			<strong>Reference pro zápis a čtení z databáze</strong>
+			</p>
+
+			<p>V tomto případě, budou všechny zápisy do databáze a čtení z databáze na větvi <code>notes</code></p>
+
+			<pre>
+<span class="file-line">NoteRepository.js:10</span>
+
+get notesRef () {
+  return firebase.database().ref(`notes`);
+}
+			</pre>
+			<pre>
+
+<span class="file-line">Index.vue:13</span>
+
+import Note from './Note'
+import noteRepository from '../../data/NoteRepository'
+			</pre>
+
+			<p>
+			Pro výpis poznámek jsou přitomné tyto dva důležité importy ze souborů:
+
+			<code><strong>Note.vue</strong></code> kde mimo jiné najdeme markup pro samotnou poznámku
+
+			a 
+
+			<code><strong>NoteRepository.js</strong></code> kde získáváme přistup k samotné databázi a událostem jako přidání, aktualizace a smazaní poznámky.
+</p>
+
+<p>Jednotlivé poznámky jsou přísupné jako pole a u každé poznámky máme přistup ke třem hodnotám <code><strong>note.key</strong></code> (jedinečný identifikátor poznámky), <code><strong>note.title</strong></code> (text titulku) a <code><strong>note.content</strong> (samotný text poznámky)</code>.
+Při samotném výpisu poznámky na stránky využijeme poslední dvě zmíněné.
+</p>
+
+
+			</div>
+
+
+
+
+				<div class="guide-item">
+				<h3>Markup poznámky</h3>
+			<pre>
+
+<span class="file-line">Note.vue:1</span>
+
+&lt;template>
+  &lt;div class="note" v-bind:class="[size]">
+    &lt;h2>{{<strong>note.title</strong>}}&lt;/h2>
+    &lt;pre>{{<strong>note.content</strong>}}&lt;/pre>
+    &lt;button type="button" v-on:click.stop="remove">
+      &lt;i class="fa fa-trash-o" aria-hidden="true">&lt;/i>
+    &lt;/button>
+    &lt;button class="edit" type="button">
+      &lt;i class="fa fa-pencil" aria-hidden="true">&lt;/i>
+    &lt;/button>
+  &lt;/div>
+&lt;/template>
+			</pre>
+
+			<p>
+			Markup výpisu jednotlivých poznámek je statický, jedinnou promměnou složkou je text titulku a obsahu poznámky.
+			Tyto hodnoty jsou reprezentovány jako 	<code><strong>note.title</strong></code> a <code><strong>note.content</strong></code>.
+
+			
+		
+			</p>
+
+			</div>
+</div>
+
 
 
 <div class="item-section">
@@ -142,6 +235,8 @@ createNote () {
 			Funkce	<code><strong>this.title.trim()</strong></code> odstraní z řetezce mezery a zalomení řádků. Podmínka tedy bude splněna pokud v hodnotě titulku je nějaký znak, který není <em>whitespace.</em>
 			</p>
 
+			<p>Tato funkce je použita pouze pro kontrolu při tvorbě poznámky, Poznámka je poté uložena a i vypysována včerně těchto znaků. Vypisované poznámky jsou tedy i včetně mezer a zalomených řádků.</p>
+
 			<p>
 				V takovém případě je volána funkce <code><strong>noteRepository.create()</strong></code>, které předáváme hodnotu <code>title</code> (Titulek) a <code>content</code> (Text poznámky) z elementů input a textarea.
 			</p>
@@ -170,65 +265,12 @@ create ({title = '', content = ''}, onComplete) {
 			<a href="https://firebase.google.com/docs/database/admin/save-data" target="_blank">https://firebase.google.com/docs/database/admin/save-data</a>
 			</p>
 
-			<p>
-			<strong>Přístup ke konkrétní databázi:</strong>
-			</p>
-
-			<pre>
-<span class="file-line">NoteRepository.js:13</span>
-
-constructor () {
-  super()
-  var database = firebase.database(); 
-}
-			</pre>
-
-			<p>
-			<strong>Reference pro zápis a čtení z databáze</strong>
-			</p>
-
-			<p>V tomto případě, budou všechny zápisy do databáze a čtení z databáze na větvi <code>notes</code></p>
-
-			<pre>
-<span class="file-line">NoteRepository.js:10</span>
-
-get notesRef () {
-  return firebase.database().ref(`notes`);
-}
-			</pre>
-
 			</div>
 
 </div>
 
 <div class="item-section">
-	<h2 class="item-heading">Výpis poznámek</h2>
-
-	<div class="guide-item">
-				<h3>Šablona položky příručky</h3>
-			<pre>
-
-<span class="file-line">JmenoSouboru.js:cislo-radku</span>
-
-prikladFunkce () {
-  //Komentář
-  objekt.funkce();
-  prikaz;
-}
-			</pre>
-
-			<p>
-			Doplňující popisek, vysvětlnení funkce / principu.
-			Zmiňovaný kus kódu je tučně
-			<code><strong>pro="lepsi-citelnost"</strong></code>
-			Součátí textu může <a href="#">samozřejmě být i odkaz</a> na externí stránku (dokumentace atd).
-			</p>
-
-			</div>
-</div>
-
-<div class="item-section">
-	<h2 class="item-heading">Mazání poznámky</h2>
+	<h2 class="item-heading">Úprava poznámky</h2>
 
 		<div class="guide-item">
 				<h3>Šablona položky příručky</h3>
@@ -252,6 +294,85 @@ prikladFunkce () {
 
 			</div>
 </div>
+
+
+<div class="item-section">
+	<h2 class="item-heading">Mazání poznámky</h2>
+
+		<div class="guide-item">
+				<h3>Odstranění poznámky při kliknutí na tlačítko</h3>
+			<pre>
+
+<span class="file-line">Note.vue:5</span>
+
+&lt;button type="button" v-on:click.stop="remove">
+			</pre>
+
+			<p>
+			Atribut <code><strong>v-on:submit.prevent="remove"</strong></code> na tlačítku poznámky říká, jaká funkce (<code><strong>remove()</strong></code>) bude zavolána při kliku na tlačítko zobrazovaném jako ikona popelnice.
+			</p>
+
+			</div>
+
+					<div class="guide-item">
+				<h3>Funkce <code>remove()</code></h3>
+			<pre>
+
+<span class="file-line">Note.vue:27</span>
+
+remove () {
+  noteRepository.remove(this.note, (err) => {
+    if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se odstranit poznámku'})
+  })
+}
+			</pre>
+
+			<p>
+		Funkce <code><strong>remove()</strong></code> ve skutečnosti volá funkci ze souboru <code><strong>noteRepository</strong></code> a poznámku na níž bylo klinuto předává funkci jako parametr (Né element poznámky jaký je vykreslený na stránkce, ale <code><strong>key</strong></code> tedy jednoznačný identifikátor konkrétní poznámky). V případě, že funkce <code><strong>noteRepository.remove()</strong></code> vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku.
+			</p>
+
+			</div>
+
+								<div class="guide-item">
+				<h3>Funkce <code>NoteRepository.remove()</code></h3>
+			<pre>
+
+<span class="file-line">NoteRepository.js:28</span>
+
+remove ({key}, onComplete) {
+  this.notesRef.child(key).remove(onComplete)
+}
+			</pre>
+
+			<p>
+				Funkce pouze odstraní položku z pole obsahující všechny poznámky.
+				To ostraní zápis poznámky z databáze, ale pro uživatele bude na stránce stále viditelná.
+			</p>
+
+			</div>
+
+
+											<div class="guide-item">
+				<h3>Odstranění poznámky ze stránky</h3>
+			<pre>
+
+<span class="file-line">Index.vue:71</span>
+
+noteRepository.on('removed', ({key}) => {
+  let note = noteRepository.find(this.notes, key)
+  this.notes.$remove(note)
+})
+			</pre>
+
+			<p>
+				Poté co je poznámka odstraněne z pole databáze, nastane událost jež ostraní reprezentaci oné poznámky zobrazované na stránce.
+				Poté již poznámka není součástí databáze a taktéž není viditelná pro uživatele.
+			</p>
+
+			</div>
+</div>
+
+
 		</div>
   </div>
 </template>
@@ -279,7 +400,7 @@ export default {
 $(document).ready(function () {
   $('.guide-item').hide()
   $('.item-heading').click(function () {
-    $(this).siblings('.guide-item').slideToggle()
+    $(this).siblings('.guide-item').stop().slideToggle()
   })
 })
 </script>
@@ -294,6 +415,7 @@ $(document).ready(function () {
 	height: calc(100vh - 50px);
 	overflow-y: scroll;
 	padding: 10px;
+	padding-top: 30px;
 }
 
 .guide-container{
@@ -305,6 +427,7 @@ $(document).ready(function () {
 	top: 0;
 	right: 0;
 	padding: 10px;
+	padding-top: 30px;
 	overflow-y: scroll;
 	border-left: 2px solid #aaa
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="note" v-bind:class="[size]">
-    <h1>{{note.title}}</h1>
+    <h2>{{note.title}}</h2>
     <pre>{{note.content}}</pre>
     <button type="button" v-on:click.stop="remove">
       <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -26,7 +26,7 @@ export default {
   methods: {
     remove () {
       noteRepository.remove(this.note, (err) => {
-        if (err) return this.$dispatch('alert', {type: 'error', message: 'Failed to remove note'})
+        if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku odstranit '})
       })
     }
   }
@@ -46,7 +46,7 @@ export default {
 .note.medium{
   width: 496px; /* medium = (col * 2) + gutter | 496px = (240px * 2) + 16px */
 }
-.note h1{
+.note h2{
   font-size: 1.1em;
   margin-bottom: 6px;
   word-wrap: break-word;

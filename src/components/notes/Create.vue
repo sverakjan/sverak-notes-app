@@ -3,7 +3,7 @@
     <input name="title" v-model="title" placeholder="Titulek"/>
     <textarea name="content" v-model="content" placeholder="Text poznámky..." rows="3">
     </textarea>
-    <button type="submit">+</button>
+    <button type="submit"></button>
   </form>
 </template>
 <script>
@@ -59,15 +59,24 @@ form.create-note input, form.create-note textarea{
 form.create-note button{
   position: absolute;
   right: 18px;
-  bottom: -18px;
+  bottom: -17px;
   background: #41b883;
   color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);
   cursor: pointer;
-  outline: none;
+	outline: none;
+	font-size: 35px;
+}
+
+form.create-note button:before{
+	content: "\002B";
+	position: absolute;
+	top: calc(50% - 3px);
+	left: 50%;
+	transform: translate(-50%,-50%);
 }
 </style>

@@ -60,7 +60,8 @@ form.edit-note input, form.edit-note textarea{
   border: none;
   padding: 4px;
   outline: none;
-  font-size: 1.2em;
+	font-size: 1.2em;
+	resize: none;
 }
 form.edit-note button[type=submit]{
   font-size: 18px;

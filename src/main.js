@@ -28,7 +28,7 @@ router.map({
 })
 
 router.alias({
-  '/': '/notes'
+  '/': '/auth'
 })
 
 router.beforeEach((transition) => {
