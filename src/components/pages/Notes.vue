@@ -273,23 +273,91 @@ create ({title = '', content = ''}, onComplete) {
 	<h2 class="item-heading">Úprava poznámky</h2>
 
 		<div class="guide-item">
-				<h3>Šablona položky příručky</h3>
+				<h3>Modal pro úpravu poznámky</h3>
 			<pre>
 
-<span class="file-line">JmenoSouboru.js:cislo-radku</span>
+<span class="file-line">UpdateModal.vue:1</span>
 
-prikladFunkce () {
-  //Komentář
-  objekt.funkce();
-  prikaz;
+&lt;template>
+  &lt;div v-if="note" transition="modal" class="backdrop" v-on:click="dismissModal">
+    &lt;form class="edit-note" v-on:submit.prevent="update" v-on:click.stop="">
+      &lt;input name="title" v-model="note.title" placeholder="Title"/>
+      &lt;textarea name="content" v-model="note.content" placeholder="Text goes here..." rows="8">&lt;/textarea>
+      &lt;button type="button" v-on:click="remove">
+        &lt;i class="fa fa-trash-o" aria-hidden="true">&lt;/i>
+      &lt;/button>
+      &lt;button type="submit">Hotovo&lt;/button>
+    &lt;/form>
+  &lt;/div>
+&lt;/template>
+			</pre>
+
+					<p>
+			Atribut
+			<code><strong>v-on:submit.prevent="update"</strong></code>
+			na formuláři říká, jaká funkce bude zavolána po odeslání formuláře: <code><strong>update()</strong></code>
+			</p>
+
+			</div>
+
+				<div class="guide-item">
+				<h3>Funkce <code>update()</code></h3>
+			<pre>
+
+<span class="file-line">UpdateModal.vue:25</span>
+
+update () {
+  noteRepository.update(this.note, (err) => {
+    if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku aktualizovat'})
+    this.dismissModal()
+    this.$dispatch('alert', {type: 'success', message: 'Poznámka byla upravena'})
+  })
 }
 			</pre>
 
 			<p>
-			Doplňující popisek, vysvětlnení funkce / principu.
-			Zmiňovaný kus kódu je tučně
-			<code><strong>pro="lepsi-citelnost"</strong></code>
-			Součátí textu může <a href="#">samozřejmě být i odkaz</a> na externí stránku (dokumentace atd).
+		Funkce <code><strong>update()</strong></code> ve skutečnosti volá funkci ze souboru <code><strong>noteRepository</strong></code> a poznámku na níž bylo klinuto předává funkci jako parametr. Né element poznámky jaký je vykreslený na stránkce, ale <code><strong>key</strong></code> tedy jednoznačný identifikátor konkrétní poznámky a nové texty zadané ve formuláři modalu. V případě, že funkce <code><strong>noteRepository.update()</strong></code> vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku. Pokud se tak nestane, zamená to že poznámka byla úspěšně upravena a uživateli je zobrazena hláška oznamusící úspěch operace.
+			</p>
+
+			</div>
+
+							<div class="guide-item">
+				<h3>Funkce <code>NoteRepository.update()</code></h3>
+			<pre>
+
+<span class="file-line">NoteRepository.js:23</span>
+
+update ({key, title = '', content = ''}, onComplete) {
+  this.notesRef.child(key).update({title, content}, onComplete)
+}
+			</pre>
+
+			<p>
+				Funkce na základně klíče najde položku v poli poznámek a pokud byla poskytnuta nová hodnota pro titulek, aktualizuje tuto hodnotu přímo v poli databáze. To samé je provedeno pro hodnotu obsahu poznámky.
+			</p>
+
+			<p>
+				Tím je poznámka aktualizována v databázi, ale na stránce viditelné uživatelem bude vidět stále původní verze.
+			</p>
+
+			</div>
+
+
+				<div class="guide-item">
+				<h3>Aktualizace poznámky na stránce</h3>
+			<pre>
+
+<span class="file-line">Index.vue:66</span>
+
+noteRepository.on('changed', ({key, title, content}) => {
+  let note = noteRepository.find(this.notes, key)
+  note.title = title
+  note.content = content
+})
+			</pre>
+
+			<p>
+				Poté co je poznámka aktualizovaná v poli databáze, je vyvolána událost, jež aktualizuje reprezentaci poznámky, kterou vidí na stránce uživatel.
 			</p>
 
 			</div>
@@ -346,6 +414,9 @@ remove ({key}, onComplete) {
 
 			<p>
 				Funkce pouze odstraní položku z pole obsahující všechny poznámky.
+			</p>
+
+			<p>
 				To ostraní zápis poznámky z databáze, ale pro uživatele bude na stránce stále viditelná.
 			</p>
 
@@ -365,7 +436,7 @@ noteRepository.on('removed', ({key}) => {
 			</pre>
 
 			<p>
-				Poté co je poznámka odstraněne z pole databáze, nastane událost jež ostraní reprezentaci oné poznámky zobrazované na stránce.
+				Poté co je poznámka odstraněne z pole databáze, je vyvolána událost, jež ostraní reprezentaci oné poznámky zobrazované na stránce.
 				Poté již poznámka není součástí databáze a taktéž není viditelná pro uživatele.
 			</p>
 

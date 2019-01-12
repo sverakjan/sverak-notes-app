@@ -26,7 +26,7 @@ export default {
   methods: {
     remove () {
       noteRepository.remove(this.note, (err) => {
-        if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku odstranit '})
+        if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku odstranit'})
       })
     }
   }

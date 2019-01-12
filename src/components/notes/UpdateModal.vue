@@ -18,13 +18,13 @@ export default {
   methods: {
     remove () {
       noteRepository.remove(this.note, (err) => {
-        if (err) return this.$dispatch('alert', {type: 'error', message: 'Failed to remove note'})
+        if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku odstranit'})
         this.dismissModal()
       })
     },
     update () {
       noteRepository.update(this.note, (err) => {
-        if (err) return this.$dispatch('alert', {type: 'error', message: 'Failed to update note'})
+        if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku aktualizovat'})
         this.dismissModal()
         this.$dispatch('alert', {type: 'success', message: 'Poznámka byla upravena'})
       })
