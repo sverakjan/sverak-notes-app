@@ -57,7 +57,7 @@ export default {
     this.masonry = new Masonry(this.$els.notes, {
       itemSelector: '.note',
       columnWidth: 240,
-      gutter: 16,
+      gutter: 20,
       fitWidth: true
     })
     noteRepository.on('added', (note) => {
@@ -80,4 +80,5 @@ export default {
 .notes{
   margin: 0 auto;
 }
+
 </style>

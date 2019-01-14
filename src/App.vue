@@ -40,10 +40,9 @@ export default {
 html{
   position: relative;
   min-height: 100%;
-  font-family: sans-serif;
 }
 body{
-  background: #eee;
+	font-family: 'Open Sans', sans-serif;
   min-height: 100%;
 }
 body > div{

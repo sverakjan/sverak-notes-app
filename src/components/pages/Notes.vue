@@ -270,7 +270,7 @@ create ({title = '', content = ''}, onComplete) {
 </div>
 
 <div class="item-section">
-	<h2 class="item-heading">Úprava poznámky</h2>
+	<h2 class="item-heading"><i class="fa fa-pencil" aria-hidden="true"></i> Úprava poznámky <i class="fa fa-caret-down" aria-hidden="true"></i> </h2>
 
 		<div class="guide-item">
 				<h3>Modal pro úpravu poznámky</h3>
@@ -471,7 +471,9 @@ export default {
 $(document).ready(function () {
   $('.guide-item').hide()
   $('.item-heading').click(function () {
-    $(this).siblings('.guide-item').stop().slideToggle()
+    $(this).siblings('.guide-item').stop().slideToggle(300)
+		$(this).closest(".item-section").toggleClass('open');
+		$(this).toggleClass('open');
   })
 })
 </script>
@@ -484,35 +486,56 @@ $(document).ready(function () {
 .app-container{
 	width: 70%;
 	height: calc(100vh - 50px);
-	overflow-y: scroll;
+	overflow-y: auto;
 	padding: 10px;
 	padding-top: 30px;
+	background-color: #eee;
 }
 
 .guide-container{
 	width: 30%;
-	background: #ddd;
 	height: 100%;
+	background: white;
 	min-height: calc(100vh - 100px);
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 10px;
-	padding-top: 30px;
 	overflow-y: scroll;
-	border-left: 2px solid #aaa
 }
 
 .item-section{
-	background: #bbb;
+	background: #fff;
 	padding-bottom: 1px;
-	margin-bottom: 10px;
-	border-radius: 3px;
+	/* margin-bottom: 20px; */
+	transition: background-color 0.3s
 }
 
+.item-section.open{
+	background: #eee;
+}
+
+
 .item-heading{
-	padding: 10px 0;
+	padding: 13px 0;
 	padding-left: 15px;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+}
+
+
+.item-heading i{
+	margin-right: 10px;
+}
+
+.item-heading .fa-caret-down{
+	margin-left: auto;
+	margin-right: 20px;
+	transition: transform 0.3s;
+}
+
+.item-heading.open .fa-caret-down{
+	transform: rotate(180deg);
 }
 
 .item-heading:hover{
@@ -521,7 +544,7 @@ $(document).ready(function () {
 }
 
 .guide-item{
-	background: white;
+	background: #fff;
 	padding: 15px;
 	font-size: 15px;
 	margin: 15px;
@@ -534,7 +557,7 @@ $(document).ready(function () {
 
 .guide-item pre{
 	font-size: 14px;
-	overflow-x: scroll;
+	overflow-x: auto;
 	margin-bottom: 15px;
 }
 
