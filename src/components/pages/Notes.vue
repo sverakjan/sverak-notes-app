@@ -9,8 +9,9 @@
 
 <div class="item-section">
 			<h2 class="item-heading">
-				Inicializace databáze
-			</h2>
+				<i class="fa fa-database" aria-hidden="true"></i>
+				Inicializace databáze 
+				<i class="fa fa-caret-down" aria-hidden="true"></i></h2>
 
 			<div class="guide-item">
 				<h3>Importování Firebase</h3>
@@ -77,7 +78,11 @@ export default !firebase.apps.length ? firebase.initializeApp(config) : firebase
 </div>
 
 <div class="item-section">
-	<h2 class="item-heading">Výpis poznámek</h2>
+	<h2 class="item-heading">
+		<i class="fa fa-list-ul" aria-hidden="true"></i>
+		Výpis poznámek
+		<i class="fa fa-caret-down" aria-hidden="true"></i>
+		</h2>
 <div class="guide-item">
 				<h3>Přístup k poznámkám</h3>
 				<p>
@@ -172,7 +177,9 @@ Při samotném výpisu poznámky na stránky využijeme poslední dvě zmíněn�
 
 <div class="item-section">
 			<h2 class="item-heading">
+				<i class="fa fa-plus" aria-hidden="true"></i>
 				Přidání poznámky
+				<i class="fa fa-caret-down" aria-hidden="true"></i>
 			</h2>
 
 			<div class="guide-item">
@@ -270,7 +277,10 @@ create ({title = '', content = ''}, onComplete) {
 </div>
 
 <div class="item-section">
-	<h2 class="item-heading"><i class="fa fa-pencil" aria-hidden="true"></i> Úprava poznámky <i class="fa fa-caret-down" aria-hidden="true"></i> </h2>
+	<h2 class="item-heading">
+		<i class="fa fa-pencil-alt" aria-hidden="true"></i> 
+		Úprava poznámky 
+		<i class="fa fa-caret-down" aria-hidden="true"></i> </h2>
 
 		<div class="guide-item">
 				<h3>Modal pro úpravu poznámky</h3>
@@ -365,7 +375,11 @@ noteRepository.on('changed', ({key, title, content}) => {
 
 
 <div class="item-section">
-	<h2 class="item-heading">Mazání poznámky</h2>
+	<h2 class="item-heading">
+		<i class="fa fa-trash-alt" aria-hidden="true"></i>
+		Mazání poznámky
+		<i class="fa fa-caret-down" aria-hidden="true"></i>
+		</h2>
 
 		<div class="guide-item">
 				<h3>Odstranění poznámky při kliknutí na tlačítko</h3>
@@ -501,6 +515,7 @@ $(document).ready(function () {
 	top: 0;
 	right: 0;
 	overflow-y: scroll;
+	border-left: 3px solid #aaa;
 }
 
 .item-section{
@@ -508,6 +523,10 @@ $(document).ready(function () {
 	padding-bottom: 1px;
 	/* margin-bottom: 20px; */
 	transition: background-color 0.3s
+}
+
+.item-section:hover{
+	background: #eee;
 }
 
 .item-section.open{
@@ -525,13 +544,14 @@ $(document).ready(function () {
 
 
 .item-heading i{
-	margin-right: 10px;
+	margin-right: 15px;
 }
 
 .item-heading .fa-caret-down{
 	margin-left: auto;
 	margin-right: 20px;
 	transition: transform 0.3s;
+	backface-visibility: hidden;
 }
 
 .item-heading.open .fa-caret-down{

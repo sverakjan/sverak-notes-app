@@ -5,7 +5,7 @@
       <textarea name="content" v-model="note.content" placeholder="Text goes here..." rows="8">
       </textarea>
       <button type="button" v-on:click="remove">
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        <i class="fa fa-trash-alt" aria-hidden="true"></i>
       </button>
       <button type="submit">Hotovo</button>
     </form>
@@ -51,7 +51,7 @@ form.edit-note{
   margin: 25vh auto 0;
   background: #fff;
   padding: 15px;
-  border-radius: 2px;
+  border-radius: 7px;
   box-shadow: 0 1px 50px #555;
 }
 form.edit-note input, form.edit-note textarea{
@@ -62,6 +62,7 @@ form.edit-note input, form.edit-note textarea{
   outline: none;
 	font-size: 1.2em;
 	resize: none;
+	margin-bottom: 20px;
 }
 form.edit-note button[type=submit]{
   font-size: 18px;

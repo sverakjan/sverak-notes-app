@@ -3,10 +3,10 @@
     <h2>{{note.title}}</h2>
     <pre>{{note.content}}</pre>
     <button type="button" v-on:click.stop="remove">
-      <i class="fa fa-trash-o" aria-hidden="true"></i>
+      <i class="fa fa-trash-alt" aria-hidden="true"></i>
     </button>
     <button class="edit" type="button">
-      <i class="fa fa-pencil" aria-hidden="true"></i>
+      <i class="fa fa-pencil-alt" aria-hidden="true"></i>
     </button>
   </div>
 </template>
