@@ -1,53 +1,49 @@
 <template>
   <div class="note" v-bind:class="[size]">
-    <h2>{{note.title}}</h2>
-    <pre>{{note.content}}</pre>
-    <button type="button" v-on:click.stop="remove">
-      <i class="fa fa-trash-alt" aria-hidden="true"></i>
-    </button>
-    <button class="edit" type="button">
-      <i class="fa fa-pencil-alt" aria-hidden="true"></i>
-    </button>
+    <h2>{{ note.title }}</h2>
+    <pre>{{ note.content }}</pre>
+    <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
+    <button class="edit" type="button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
   </div>
 </template>
 <script>
-import noteRepository from '../../data/NoteRepository'
+import noteRepository from "../../data/NoteRepository";
 export default {
-  props: ['note'],
+  props: ["note"],
   computed: {
-    size () {
-      let length = this.note.content.length
+    size() {
+      let length = this.note.content.length;
       if (length < 500) {
-        return 'small'
+        return "small";
       }
-      return 'medium'
+      return "medium";
     }
   },
   methods: {
-    remove () {
-      noteRepository.remove(this.note, (err) => {
-        if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku odstranit'})
-      })
+    remove() {
+      noteRepository.remove(this.note, err => {
+        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se poznámku odstranit" });
+      });
     }
   }
-}
+};
 </script>
 <style>
-.note{
+.note {
   background: #fff;
   border-radius: 7px;
-  box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  padding-bottom: 10px;
   margin: 12px 0;
   width: 240px; /* collumn size */
-  transition: box-shadow .2s, transform 0.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
   cursor: default;
-	
 }
-.note.medium{
+.note.medium {
   width: 496px; /* medium = (col * 2) + gutter | 496px = (240px * 2) + 16px */
 }
-.note h2{
+.note h2 {
   font-size: 1.2em;
   margin-bottom: 18px;
   word-wrap: break-word;
@@ -59,30 +55,40 @@ export default {
   word-wrap: break-word;
   font-family: inherit;
 }
-.note button{
-  background: #eee;
+.note button {
+  color: #777;
   border: none;
   font-size: 20px;
-  opacity: 0.6;
   cursor: pointer;
-  transition: opacity .5s;
+  transition: background-color 0.3s;
   margin: 0 4px 0 0;
-	box-shadow: 0 2px 5px #ccc;
-	border-radius: 7px;
-	padding: 7px 15px;
-	float: right;
-	margin-left: 12px;
+  float: right;
+  margin-left: 5px;
+  padding: 5px 10px;
+  transform: translateX(15px);
 }
 
-.note:hover, .note:focus{
+.note:hover,
+.note:focus {
   box-shadow: 0 7px 10px 0px rgba(0, 0, 0, 0.1);
-	transform: translateY(-5px);
-	cursor: pointer;
+  transform: translateY(-5px);
+  cursor: pointer;
 }
-.note:hover button, .note:focus button{
-  opacity: 0.6;
+.note:hover button,
+.note:focus button {
+  /* opacity: 0.6; */
 }
-.note button:hover, .note button:focus{
-  opacity: 1;
+
+.note button.edit {
+}
+
+.note button.edit:hover {
+  color: #66bb6a;
+}
+
+.note button.delete:hover {
+  /* background: #d32f2f; */
+  /* color: white; */
+  color: #d32f2f;
 }
 </style>

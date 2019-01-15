@@ -2,56 +2,54 @@
   <header v-if="user">
     <!-- <input placeholder="Search" v-model="searchQuery" debounce="500"> -->
     <div>
-      <span>{{user.userTitle}}</span>
+      <span>{{ user.userTitle }}</span>
       <!-- <img :src="user.imageUrl" alt="{{user.userTitle}}"/> -->
-      <a href="#" v-on:click.prevent="signOut">
-        <i class="fa fa-sign-out" aria-hidden="true"></i>
-      </a>
+      <!-- <a href="#" v-on:click.prevent="signOut"><i class="fa fa-sign-out-alt" aria-hidden="true"></i></a> -->
     </div>
   </header>
 </template>
 <script>
-import Auth from 'src/data/Auth'
+import Auth from "src/data/Auth";
 export default {
-  data () {
+  data() {
     return {
       user: null,
-      searchQuery: ''
-    }
+      searchQuery: ""
+    };
   },
   watch: {
-    'searchQuery': function () {
-      this.$dispatch('search', this.searchQuery)
+    searchQuery: function() {
+      this.$dispatch("search", this.searchQuery);
     }
   },
   methods: {
-    processUser (authed) {
+    processUser(authed) {
       if (authed === null) {
-        this.user = null
-        return
+        this.user = null;
+        return;
       }
       this.user = {
-       userTitle: ''// if there's no displayName, take the email, if there's no email, use an empty string
-				
-				//userTitle: authed[authed.provider].displayName || authed[authed.provider].email || '' // if there's no displayName, take the email, if there's no email, use an empty string
-				//imageUrl: authed[authed.provider].profileImageURL
-      }
+        userTitle: "" // if there's no displayName, take the email, if there's no email, use an empty string
+
+        //userTitle: authed[authed.provider].displayName || authed[authed.provider].email || '' // if there's no displayName, take the email, if there's no email, use an empty string
+        //imageUrl: authed[authed.provider].profileImageURL
+      };
     },
-    signOut () {
-      Auth.signOut()
-      this.$router.go('auth')
+    signOut() {
+      Auth.signOut();
+      this.$router.go("auth");
     }
   },
-  ready () {
-		Auth.onAuth(this.processUser) // processUser everytime auth state changes (signs in or out)
-		console.log(Auth.onAuth());
+  ready() {
+    Auth.onAuth(this.processUser); // processUser everytime auth state changes (signs in or out)
+    console.log(Auth.onAuth());
 
-		this.processUser(Auth.getAuth()) // processUser in case user is already signed in
+    this.processUser(Auth.getAuth()); // processUser in case user is already signed in
   }
-}
+};
 </script>
 <style>
-header{
+header {
   position: fixed;
   left: 0;
   top: 0;
@@ -60,7 +58,9 @@ header{
   height: 50px;
   background: #333;
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,.4);
+
+  display: none;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
 }
 header input {
   display: block;
@@ -94,22 +94,24 @@ header a {
   top: 10px;
   font-size: 25px;
   cursor: pointer;
-  transition: color .2s;
+  transition: color 0.2s;
 }
-header a:focus, header a:hover {
+header a:focus,
+header a:hover {
   color: #41b883;
 }
 @media screen and (max-width: 1200px) {
-  header span{
+  header span {
     /* display: none; */
   }
 }
 @media screen and (max-width: 720px) {
-  header input{
+  header input {
     width: calc(100% - 64px);
     margin: 0 0 0 16px;
   }
-  header span, header img {
+  header span,
+  header img {
     display: none;
   }
 }
