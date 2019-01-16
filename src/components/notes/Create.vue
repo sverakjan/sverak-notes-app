@@ -58,6 +58,7 @@ form.create-note textarea {
   outline: none;
   font-size: 1.2em;
   resize: none;
+  font-family: inherit;
 }
 form.create-note button {
   position: absolute;

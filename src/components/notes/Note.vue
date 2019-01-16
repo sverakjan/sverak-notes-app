@@ -66,6 +66,7 @@ export default {
   margin-left: 5px;
   padding: 5px 10px;
   transform: translateX(15px);
+  background: transparent;
 }
 
 .note:hover,

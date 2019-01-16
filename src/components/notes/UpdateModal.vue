@@ -3,7 +3,7 @@
     <form class="edit-note" v-on:submit.prevent="update" v-on:click.stop="">
       <input name="title" v-model="note.title" placeholder="Title" />
       <textarea name="content" v-model="note.content" placeholder="Text goes here..." rows="8"></textarea>
-      <button type="button" v-on:click="remove"><i class="fa fa-trash-alt" aria-hidden="true"></i></button>
+      <button type="button" v-on:click="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
       <button type="submit">Uložit</button>
     </form>
   </div>
@@ -94,8 +94,7 @@ form.edit-note button {
   padding: 5px 10px;
   transform: translateX(-5px) translateY(5px);
 }
-form.edit-note button:hover,
-form.edit-note button:focus {
+form.edit-note button:hover {
   color: #d32f2f;
 }
 

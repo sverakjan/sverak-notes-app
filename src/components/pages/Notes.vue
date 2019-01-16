@@ -518,7 +518,7 @@ $(document).ready(function() {
 }
 
 .app-container {
-  width: 70%;
+  width: calc(100% - 400px);
   height: 100vh;
   overflow-y: auto;
   padding: 10px;
@@ -527,7 +527,7 @@ $(document).ready(function() {
 }
 
 .guide-container {
-  width: 30%;
+  width: 400px;
   height: 100%;
   background: white;
   min-height: calc(100vh - 100px);

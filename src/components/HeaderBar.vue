@@ -42,7 +42,7 @@ export default {
   },
   ready() {
     Auth.onAuth(this.processUser); // processUser everytime auth state changes (signs in or out)
-    console.log(Auth.onAuth());
+    //console.log(Auth.onAuth());
 
     this.processUser(Auth.getAuth()); // processUser in case user is already signed in
   }

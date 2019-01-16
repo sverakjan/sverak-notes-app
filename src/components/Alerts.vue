@@ -13,7 +13,7 @@ export default {
 <style>
 .alerts {
   position: fixed;
-  top: 50px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1;
