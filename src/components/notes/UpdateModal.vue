@@ -15,15 +15,15 @@ export default {
   methods: {
     remove() {
       noteRepository.remove(this.note, err => {
-        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se poznámku odstranit" });
+        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznam odstranit" });
         this.dismissModal();
       });
     },
     update() {
       noteRepository.update(this.note, err => {
-        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se poznámku aktualizovat" });
+        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznam aktualizovat" });
         this.dismissModal();
-        this.$dispatch("alert", { type: "success", message: "Poznámka byla upravena" });
+        this.$dispatch("alert", { type: "success", message: "Záznam byl upraven" });
       });
     },
     dismissModal() {

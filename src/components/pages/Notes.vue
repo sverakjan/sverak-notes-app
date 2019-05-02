@@ -77,11 +77,11 @@ export default !firebase.apps.length ? firebase.initializeApp(config) : firebase
       <div class="item-section">
         <h2 class="item-heading">
           <i class="fa fa-list-ul" aria-hidden="true"></i>
-          Výpis poznámek
+          Výpis záznamů
           <i class="fa fa-caret-down" aria-hidden="true"></i>
         </h2>
         <div class="guide-item">
-          <h3>Přístup k poznámkám</h3>
+          <h3>Přístup k záznamům</h3>
           <p></p>
           <p><strong>Přístup ke konkrétní databázi:</strong></p>
 
@@ -97,7 +97,7 @@ constructor () {
           <p><strong>Reference pro zápis a čtení z databáze</strong></p>
 
           <p>
-            V tomto případě, budou všechny zápisy do databáze a čtení z databáze na větvi
+            V tomto případě, budou všechny záznamy do databáze a čtení z databáze na větvi
             <code>notes</code>
           </p>
 
@@ -117,31 +117,31 @@ import noteRepository from '../../data/NoteRepository'
 			</pre>
 
           <p>
-            Pro výpis poznámek jsou přitomné tyto dva důležité importy ze souborů:
+            Pro výpis záznamů jsou přitomné tyto dva důležité importy ze souborů:
 
             <code><strong>Note.vue</strong></code>
-            kde mimo jiné najdeme markup pro samotnou poznámku a
+            kde mimo jiné najdeme markup pro samotný záznam a
 
             <code><strong>NoteRepository.js</strong></code>
-            kde získáváme přistup k samotné databázi a událostem jako přidání, aktualizace a smazaní poznámky.
+            kde získáváme přistup k samotné databázi a událostem jako přidání, aktualizace a smazaní záznamu.
           </p>
 
           <p>
-            Jednotlivé poznámky jsou přísupné jako pole a u každé poznámky máme přistup ke třem hodnotám
+            Jednotlivé záznamy jsou přísupné jako pole a u každého záznamu máme přistup ke třem hodnotám
             <code><strong>note.key</strong></code>
-            (jedinečný identifikátor poznámky),
+            (jedinečný identifikátor záznamu),
             <code><strong>note.title</strong></code>
             (text titulku) a
             <code>
               <strong>note.content</strong>
-              (samotný text poznámky)
+              (samotný text záznamu)
             </code>
-            . Při samotném výpisu poznámky na stránky využijeme poslední dvě zmíněné.
+            . Při samotném výpisu záznamu na stránky využijeme poslední dvě zmíněné.
           </p>
         </div>
 
         <div class="guide-item">
-          <h3>Markup poznámky</h3>
+          <h3>Markup záznamu</h3>
           <pre>
 
 <span class="file-line">Note.vue:1</span>
@@ -161,7 +161,7 @@ import noteRepository from '../../data/NoteRepository'
 			</pre>
 
           <p>
-            Markup výpisu jednotlivých poznámek je statický, jedinnou promměnou složkou je text titulku a obsahu poznámky. Tyto hodnoty jsou reprezentovány jako
+            Markup výpisu jednotlivých záznamů je statický, jedinnou promměnou složkou je text titulku a obsahu záznamu. Tyto hodnoty jsou reprezentovány jako
             <code><strong>note.title</strong></code>
             a
             <code><strong>note.content</strong></code>
@@ -173,12 +173,12 @@ import noteRepository from '../../data/NoteRepository'
       <div class="item-section">
         <h2 class="item-heading">
           <i class="fa fa-plus" aria-hidden="true"></i>
-          Přidání poznámky
+          Přidání záznamu
           <i class="fa fa-caret-down" aria-hidden="true"></i>
         </h2>
 
         <div class="guide-item">
-          <h3>Formlulář přidání poznámky</h3>
+          <h3>Formlulář přidání záznamu</h3>
           <pre>
 
 <span class="file-line">Create.vue:1</span>
@@ -186,7 +186,7 @@ import noteRepository from '../../data/NoteRepository'
 &lt;template>
   &lt;form class="create-note" <strong>v-on:submit.prevent="createNote"</strong>>
     &lt;input name="title" v-model="title" placeholder="Titulek"/>
-    &lt;textarea name="content" v-model="content" placeholder="Text poznámky..." rows="3">
+    &lt;textarea name="content" v-model="content" placeholder="Text záznamu..." rows="3">
     &lt;/textarea>
     &lt;button type="submit">+&lt;/button>
   &lt;/form>
@@ -203,7 +203,7 @@ import noteRepository from '../../data/NoteRepository'
 
         <div class="guide-item">
           <h3>
-            Přidání poznámky, funkce
+            Přidání záznamu, funkce
             <code><strong>CreateNote()</strong></code>
           </h3>
           <pre>
@@ -225,10 +225,10 @@ createNote () {
 createNote () {
   if (this.title.trim() || this.content.trim()) {
     noteRepository.create({title: this.title, content: this.content}, (err) => {
-    if (err) return this.$dispatch('alert', {type: 'error', message: 'Poznámku se nepodařilo vytvořit'})
+    if (err) return this.$dispatch('alert', {type: 'error', message: 'Záznam se nepodařilo vytvořit'})
       this.title = ''
       this.content = ''
-      this.$dispatch('alert', {type: 'success', message: 'Poznámka vytvořena'})
+      this.$dispatch('alert', {type: 'success', message: 'Záznamu vytvořen'})
     })
   }
 }
@@ -241,7 +241,7 @@ createNote () {
             <em>whitespace.</em>
           </p>
 
-          <p>Tato funkce je použita pouze pro kontrolu při tvorbě poznámky, Poznámka je poté uložena a i vypysována včerně těchto znaků. Vypisované poznámky jsou tedy i včetně mezer a zalomených řádků.</p>
+          <p>Tato funkce je použita pouze pro kontrolu při tvorbě záznamu, Záznam je poté uložena a i vypysována včerně těchto znaků. Vypisované záznamy jsou tedy i včetně mezer a zalomených řádků.</p>
 
           <p>
             V takovém případě je volána funkce
@@ -250,13 +250,13 @@ createNote () {
             <code>title</code>
             (Titulek) a
             <code>content</code>
-            (Text poznámky) z elementů input a textarea.
+            (Text záznamu) z elementů input a textarea.
           </p>
         </div>
 
         <div class="guide-item">
           <h3>
-            Přidání poznámky, funkce
+            Přidání záznamu, funkce
             <code><strong>noteRepository.create()</strong></code>
           </h3>
           <pre>
@@ -270,7 +270,7 @@ create ({title = '', content = ''}, onComplete) {
 
           <p>
             <code>notesRef</code>
-            je pole obsahující všechny záznamy (poznámky). Funkce tedy “vkládá” položku do pole.
+            je pole obsahující všechny záznamy. Funkce tedy “vkládá” položku do pole.
           </p>
 
           <p>
@@ -283,12 +283,12 @@ create ({title = '', content = ''}, onComplete) {
       <div class="item-section">
         <h2 class="item-heading">
           <i class="fa fa-pencil" aria-hidden="true"></i>
-          Úprava poznámky
+          Úprava záznamu
           <i class="fa fa-caret-down" aria-hidden="true"></i>
         </h2>
 
         <div class="guide-item">
-          <h3>Modal pro úpravu poznámky</h3>
+          <h3>Modal pro úpravu záznamu</h3>
           <pre>
 
 <span class="file-line">UpdateModal.vue:1</span>
@@ -326,9 +326,9 @@ create ({title = '', content = ''}, onComplete) {
 
 update () {
   noteRepository.update(this.note, (err) => {
-    if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se poznámku aktualizovat'})
+    if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se záznam aktualizovat'})
     this.dismissModal()
-    this.$dispatch('alert', {type: 'success', message: 'Poznámka byla upravena'})
+    this.$dispatch('alert', {type: 'success', message: 'Záznam byl upraven'})
   })
 }
 			</pre>
@@ -338,15 +338,15 @@ update () {
             <code><strong>update()</strong></code>
             ve skutečnosti volá funkci ze souboru
             <code><strong>noteRepository</strong></code>
-            a poznámku na níž bylo klinuto předává funkci jako parametr. Né element poznámky jaký je vykreslený na stránkce, ale
+            a záznam na který bylo klinuto předává funkci jako parametr. Né element záznamu jaký je vykreslený na stránkce, ale
             <code><strong>key</strong></code>
-            tedy jednoznačný identifikátor konkrétní poznámky a nové texty zadané ve formuláři modalu.
+            tedy jednoznačný identifikátor konkrétního záznamu a nové texty zadané ve formuláři modalu.
           </p>
 
           <p>
             V případě, že funkce
             <code><strong>noteRepository.update()</strong></code>
-            vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku. Pokud se tak nestane, zamená to že poznámka byla úspěšně upravena a uživateli je zobrazena hláška oznamusící úspěch operace.
+            vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku. Pokud se tak nestane, zamená to že záznam byl úspěšně upraven a uživateli je zobrazena hláška oznamusící úspěch operace.
           </p>
         </div>
 
@@ -364,13 +364,13 @@ update ({key, title = '', content = ''}, onComplete) {
 }
 			</pre>
 
-          <p>Funkce na základně klíče najde položku v poli poznámek a pokud byla poskytnuta nová hodnota pro titulek, aktualizuje tuto hodnotu přímo v poli databáze. To samé je provedeno pro hodnotu obsahu poznámky.</p>
+          <p>Funkce na základně klíče najde položku v poli záznamů a pokud byla poskytnuta nová hodnota pro titulek, aktualizuje tuto hodnotu přímo v poli databáze. To samé je provedeno pro hodnotu obsahu záznamu.</p>
 
-          <p>Tím je poznámka aktualizována v databázi, ale na stránce viditelné uživatelem bude vidět stále původní verze.</p>
+          <p>Tím je záznam aktualizována v databázi, ale na stránce viditelné uživatelem bude vidět stále původní verze.</p>
         </div>
 
         <div class="guide-item">
-          <h3>Aktualizace poznámky na stránce</h3>
+          <h3>Aktualizace záznamu na stránce</h3>
           <pre>
 
 <span class="file-line">Index.vue:66</span>
@@ -382,19 +382,19 @@ noteRepository.on('changed', ({key, title, content}) => {
 })
 			</pre>
 
-          <p>Poté co je poznámka aktualizovaná v poli databáze, je vyvolána událost, jež aktualizuje reprezentaci poznámky, kterou vidí na stránce uživatel.</p>
+          <p>Poté co je záznam aktualizovan v poli databáze, je vyvolána událost, jež aktualizuje reprezentaci záznamu, kterou vidí na stránce uživatel.</p>
         </div>
       </div>
 
       <div class="item-section">
         <h2 class="item-heading">
           <i class="fa fa-trash" aria-hidden="true"></i>
-          Mazání poznámky
+          Mazání záznamu
           <i class="fa fa-caret-down" aria-hidden="true"></i>
         </h2>
 
         <div class="guide-item">
-          <h3>Odstranění poznámky při kliknutí na tlačítko</h3>
+          <h3>Odstranění záznamu při kliknutí na tlačítko</h3>
           <pre>
 
 <span class="file-line">Note.vue:5</span>
@@ -405,7 +405,7 @@ noteRepository.on('changed', ({key, title, content}) => {
           <p>
             Atribut
             <code><strong>v-on:submit.prevent="remove"</strong></code>
-            na tlačítku poznámky říká, jaká funkce (
+            na tlačítku záznamu říká, jaká funkce (
             <code><strong>remove()</strong></code>
             ) bude zavolána při kliku na tlačítko zobrazovaném jako ikona popelnice.
           </p>
@@ -422,7 +422,7 @@ noteRepository.on('changed', ({key, title, content}) => {
 
 remove () {
   noteRepository.remove(this.note, (err) => {
-    if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se odstranit poznámku'})
+    if (err) return this.$dispatch('alert', {type: 'error', message: 'Nepodařilo se odstranit záznam'})
   })
 }
 			</pre>
@@ -432,9 +432,9 @@ remove () {
             <code><strong>remove()</strong></code>
             ve skutečnosti volá funkci ze souboru
             <code><strong>noteRepository</strong></code>
-            a poznámku na níž bylo klinuto předává funkci jako parametr (Né element poznámky jaký je vykreslený na stránkce, ale
+            a záznam na který bylo klinuto předává funkci jako parametr (Né element záznamu jaký je vykreslený na stránkce, ale
             <code><strong>key</strong></code>
-            tedy jednoznačný identifikátor konkrétní poznámky). V případě, že funkce
+            tedy jednoznačný identifikátor konkrétního záznamu). V případě, že funkce
             <code><strong>noteRepository.remove()</strong></code>
             vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku.
           </p>
@@ -454,13 +454,13 @@ remove ({key}, onComplete) {
 }
 			</pre>
 
-          <p>Funkce pouze odstraní položku z pole obsahující všechny poznámky.</p>
+          <p>Funkce pouze odstraní položku z pole obsahující všechny záznamy.</p>
 
-          <p>To ostraní zápis poznámky z databáze, ale pro uživatele bude na stránce stále viditelná.</p>
+          <p>To ostraní záznamy z databáze, ale pro uživatele bude na stránce stále viditelný.</p>
         </div>
 
         <div class="guide-item">
-          <h3>Odstranění poznámky ze stránky</h3>
+          <h3>Odstranění záznamu ze stránky</h3>
           <pre>
 
 <span class="file-line">Index.vue:71</span>
@@ -471,7 +471,7 @@ noteRepository.on('removed', ({key}) => {
 })
 			</pre>
 
-          <p>Poté co je poznámka odstraněne z pole databáze, je vyvolána událost, jež ostraní reprezentaci oné poznámky zobrazované na stránce. Poté již poznámka není součástí databáze a taktéž není viditelná pro uživatele.</p>
+          <p>Poté co je záznam odstraněn z pole databáze, je vyvolána událost, jež ostraní reprezentaci oného záznamu zobrazovaného na stránce. Poté již záznam není součástí databáze a taktéž není viditelný pro uživatele.</p>
         </div>
       </div>
     </div>
@@ -515,11 +515,12 @@ $(document).ready(function() {
 <style>
 .wrapper {
   position: relative;
+  height: calc(100vh - 50px);
 }
 
 .app-container {
   width: calc(100% - 400px);
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   padding: 10px;
   padding-top: 30px;
@@ -530,7 +531,6 @@ $(document).ready(function() {
   width: 400px;
   height: 100%;
   background: white;
-  min-height: calc(100vh - 100px);
   position: absolute;
   top: 0;
   right: 0;

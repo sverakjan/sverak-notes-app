@@ -1,8 +1,8 @@
 {
-  "name": "gkeep-vueifire",
-  "version": "0.1.0",
-  "description": "Google Keep clone built with Vue and Firebase",
-  "author": "Niels Swimberghe <nielsswimberghe@gmail.com>",
+  "name": "sverak-notes-app",
+  "version": "1.0.0",
+  "description": "Node.js notes demo app",
+  "author": "Jan Sverak",
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",

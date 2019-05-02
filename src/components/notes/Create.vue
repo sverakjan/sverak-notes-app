@@ -1,7 +1,7 @@
 <template>
   <form class="create-note" v-on:submit.prevent="createNote">
     <input name="title" v-model="title" placeholder="Titulek" />
-    <textarea name="content" v-model="content" placeholder="Text poznámky..." rows="3"></textarea>
+    <textarea name="content" v-model="content" placeholder="Text záznamu..." rows="3"></textarea>
     <button type="submit">Uložit</button>
   </form>
 </template>
@@ -19,10 +19,10 @@ export default {
     createNote() {
       if (this.title.trim() || this.content.trim()) {
         noteRepository.create({ title: this.title, content: this.content }, err => {
-          if (err) return this.$dispatch("alert", { type: "error", message: "Poznámku se nepodařilo vytvořit" });
+          if (err) return this.$dispatch("alert", { type: "error", message: "Záznam se nepodařilo vytvořit" });
           this.title = "";
           this.content = "";
-          this.$dispatch("alert", { type: "success", message: "Poznámka vytvořena" });
+          this.$dispatch("alert", { type: "success", message: "Záznam vytvořen" });
         });
       }
     }

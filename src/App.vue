@@ -48,6 +48,7 @@ body {
 body > div {
   /* padding: 50px 16px; */
   /* padding-top: 50px; */
+  padding-top: 50px;
   padding-bottom: 0;
   min-height: 100vh;
   background: #eee;

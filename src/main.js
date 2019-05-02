@@ -5,7 +5,7 @@ import NotesPage from "./components/pages/Notes";
 import AuthPage from "./components/pages/Auth";
 import Auth from "./data/Auth";
 
-//import firebase from './data/firebase';
+import firebase from "./data/firebase";
 
 Vue.use(VueRouter);
 
@@ -16,19 +16,19 @@ let app = Vue.extend({
 let router = new VueRouter();
 
 router.map({
+  "/auth": {
+    name: "auth",
+    component: AuthPage
+  },
   "/notes": {
     name: "notes",
     component: NotesPage,
     auth: true // this route requires the user to be signed in
-  },
-  "/auth": {
-    name: "auth",
-    component: AuthPage
   }
 });
 
 router.alias({
-  "/": "/notes"
+  "/": "/auth"
 });
 
 router.beforeEach(transition => {
