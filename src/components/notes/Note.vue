@@ -31,19 +31,26 @@ export default {
 };
 </script>
 <style>
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .note {
   background: #fff;
   border-radius: 7px;
   box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
   padding: 20px;
   padding-bottom: 10px;
-  margin: 12px 0;
-  width: 240px; /* collumn size */
   transition: box-shadow 0.2s, transform 0.2s;
   cursor: default;
+
+  margin: 10px;
+
+  width: calc(25% - 20px);
 }
 .note.medium {
-  width: 496px; /* medium = (col * 2) + gutter | 496px = (240px * 2) + 16px */
+  width: calc(50% - 20px);
 }
 .note-title {
   font-size: 1.2rem;

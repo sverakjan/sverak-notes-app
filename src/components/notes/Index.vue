@@ -32,30 +32,13 @@ export default {
       });
     }
   },
-  watch: {
-    filteredNotes: {
-      // watch the notes array for changes
-      handler() {
-        this.$nextTick(() => {
-          this.masonry.reloadItems();
-          this.masonry.layout();
-        });
-      },
-      deep: true // we also want to watch changed inside individual notes
-    }
-  },
+  watch: {},
   events: {
     search: function(searchQuery) {
       this.searchQuery = searchQuery;
     }
   },
   ready() {
-    this.masonry = new Masonry(this.$els.notes, {
-      itemSelector: ".note",
-      columnWidth: 240,
-      gutter: 20,
-      fitWidth: true
-    });
     noteRepository.on("added", note => {
       this.notes.unshift(note); // add the note to the beginning of the array
     });
