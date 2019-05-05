@@ -481,6 +481,7 @@ noteRepository.on('removed', ({key}) => {
 import Notes from "src/components/notes/Index";
 import CreateNoteForm from "src/components/notes/Create";
 import UpdateModal from "src/components/notes/UpdateModal";
+import { functions } from "firebase";
 export default {
   components: {
     Notes,
@@ -496,10 +497,34 @@ export default {
     "note.selected": function(note) {
       this.selectedNote = note;
     }
+  },
+  guideInitInit() {
+    console.log("sup boi");
   }
 };
 $(document).ready(function() {
-  $(".guide-item").hide();
+  guideInitCheck();
+
+  $(".sign-out-button").click(function() {
+    guideInitCheck();
+  });
+});
+
+function guideInitCheck() {
+  clearInterval(guideTimer);
+
+  var guideTimer = setInterval(function() {
+    console.log("jedu");
+
+    if ($(".guide-item").length > 0) {
+      clearInterval(guideTimer);
+
+      guideInit();
+    }
+  }, 100);
+}
+
+function guideInit() {
   $(".item-heading").click(function() {
     $(this)
       .siblings(".guide-item")
@@ -510,7 +535,7 @@ $(document).ready(function() {
       .toggleClass("open");
     $(this).toggleClass("open");
   });
-});
+}
 </script>
 <style>
 .wrapper {
@@ -593,6 +618,8 @@ $(document).ready(function() {
   margin: 15px;
   margin-top: 0;
   border-radius: 3px;
+
+  display: none;
 }
 
 .guide-item:last-child {

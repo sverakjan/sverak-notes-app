@@ -1,26 +1,31 @@
 <template>
-  <header v-if="user">
-    <span class="user-title">{{ user.userTitle }}</span>
-    <a href="#" v-on:click.prevent="signOut"><i class="fa fa-sign-out"></i></a>
+  <header>
+    <div v-if="user">
+      <span :key="user" class="user-title">{{ user.userTitle }}</span>
+      <a class="sign-out-button hidden" href="#" v-on:click.prevent="signOut"><i class="fa fa-sign-out"></i></a>
+    </div>
   </header>
 </template>
 <script>
 import Auth from "src/data/Auth";
+
 export default {
   data() {
     return {
-      user: ""
+      user: null
     };
   },
   watch: {},
   methods: {
-    processUser(authed) {
-      if (authed === null) {
-        this.user = null;
-        return;
-      }
-
-      console.log(Auth.getAuth());
+    processUser() {
+      var userEmailTimer = setInterval(function() {
+        var user = Auth.getAuth();
+        if (user.currentUser != null) {
+          clearInterval(userEmailTimer);
+          document.querySelector(".user-title").textContent = user.currentUser.email;
+          document.querySelector(".sign-out-button").classList.remove("hidden");
+        }
+      }, 100);
 
       this.user = {
         userTitle: ""
@@ -29,12 +34,16 @@ export default {
     signOut() {
       Auth.signOut();
       this.$router.go("auth");
+      document.querySelector(".user-title").textContent = "";
+      document.querySelector(".sign-out-button").classList.add("hidden");
     }
   },
   ready() {
-    var testik = Auth.onAuth(); // processUser everytime auth state changes (signs in or out)
-
-    this.processUser(testik); // processUser in case user is already signed in
+    this.processUser();
+  },
+  onSignIn() {
+    document.querySelector(".user-title").textContent = Auth.getAuth().currentUser.email;
+    document.querySelector(".sign-out-button").classList.remove("hidden");
   }
 };
 </script>
@@ -49,5 +58,13 @@ header {
   background: white;
   box-shadow: 0 0 10px 1px rgba(161, 161, 161, 0.37);
   padding: 10px;
+}
+
+.user-title {
+  margin-right: 10px;
+}
+
+.sign-out-button.hidden {
+  display: none;
 }
 </style>

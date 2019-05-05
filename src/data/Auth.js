@@ -8,8 +8,6 @@ export default {
         //console.log(user.email);
         return user.email;
       }
-
-      console.log("hej");
     });
   },
 

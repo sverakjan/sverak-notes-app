@@ -1,7 +1,9 @@
 <template>
   <div class="note" v-bind:class="[size]">
-    <h2>{{ note.title }}</h2>
-    <pre>{{ note.content }}</pre>
+    <h2 class="note-title">{{ note.title }}</h2>
+    <span class="note-email">{{ note.email }}</span>
+    <span class="note-date">{{ note.date }}</span>
+    <pre class="note-content">{{ note.content }}</pre>
     <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
     <button class="edit" type="button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
   </div>
@@ -43,13 +45,27 @@ export default {
 .note.medium {
   width: 496px; /* medium = (col * 2) + gutter | 496px = (240px * 2) + 16px */
 }
-.note h2 {
-  font-size: 1.2em;
-  margin-bottom: 18px;
+.note-title {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
   word-wrap: break-word;
 }
-.note pre {
-  font-size: 1em;
+
+.note-email {
+  font-size: 0.85rem;
+  display: block;
+  color: gray;
+}
+
+.note-date {
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.note-content {
+  font-size: 1rem;
   margin-bottom: 25px;
   white-space: pre-wrap;
   word-wrap: break-word;

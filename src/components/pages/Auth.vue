@@ -3,15 +3,15 @@
     <h1>{{ wantsToSignUp ? "Registrovat" : "Přihlásit" }}</h1>
     <div>
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" placeholder="Email" required v-model="email" />
+      <input type="email" name="email" id="email" required v-model="email" />
     </div>
     <div>
       <label for="password">Heslo</label>
-      <input type="password" name="password" id="password" required v-model="password" placeholder="Heslo" />
+      <input type="password" name="password" id="password" required v-model="password" />
     </div>
     <div v-show="wantsToSignUp">
       <label for="confirm-password">Potvrďte heslo</label>
-      <input type="password" name="confirm-password" id="confirm-password" v-model="confirmPassword" placeholder="Potvrďte heslo" />
+      <input type="password" name="confirm-password" id="confirm-password" v-model="confirmPassword" />
     </div>
     <div v-show="!wantsToSignUp" class="clearfix btn-group">
       <button type="submit">Přihlásit se</button>
@@ -24,6 +24,8 @@
 </template>
 <script>
 import Auth from "src/data/Auth";
+import Notes from "../pages/Notes";
+import HeaderBar from "../HeaderBar";
 export default {
   data() {
     return {
@@ -56,6 +58,9 @@ export default {
     },
     onSignedIn() {
       this.$router.go({ name: "notes" });
+
+      HeaderBar.onSignIn();
+      Notes.guideInitInit();
     }
   }
 };
@@ -68,8 +73,8 @@ export default {
   margin: 0 auto;
   padding: 15px;
   margin-top: 150px;
-  border-radius: 2px;
-  box-shadow: 0 1px 5px #ccc;
+  border-radius: 7px;
+  box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
 }
 .auth-form h1 {
   font-weight: 300;
@@ -79,8 +84,12 @@ export default {
 }
 .auth-form input {
   height: 32px;
+  background: #e4e4e4;
   border: none;
-  border-bottom: 2px solid #bbb;
+  border-radius: 3px;
+  margin-bottom: 20px !important;
+  font-size: 14px !important;
+  padding-left: 10px;
 }
 .auth-form input:focus {
   border-bottom-color: #555;
@@ -89,6 +98,8 @@ export default {
 .auth-form input {
   display: block;
   width: 100%;
+  margin-bottom: 5px;
+  font-size: 18px;
 }
 .auth-form button {
   font-size: 18px;
@@ -96,17 +107,21 @@ export default {
   border: 1px solid #41b883;
   padding: 4px 6px;
   margin: 0;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
+  color: black;
+
+  height: 40px;
+  font-size: 20px;
 }
+
+.auth-form .btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 .auth-form .btn-group button {
-  border-radius: 3px 0 0 3px;
-  width: 50%;
-  float: left;
-}
-.auth-form .btn-group button + button {
-  border-radius: 0 3px 3px 0;
-  border-left: none;
+  width: 48%;
 }
 
 .auth-form button.disabled {

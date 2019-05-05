@@ -7,6 +7,7 @@
 </template>
 <script>
 import noteRepository from "../../data/NoteRepository";
+import Auth from "../../data/Auth";
 
 export default {
   data() {
@@ -18,7 +19,13 @@ export default {
   methods: {
     createNote() {
       if (this.title.trim() || this.content.trim()) {
-        noteRepository.create({ title: this.title, content: this.content }, err => {
+        var email = Auth.getAuth().currentUser.email;
+        var uid = Auth.getAuth().currentUser.uid;
+
+        var today = new Date();
+        var date = today.getDate() + ". " + (today.getMonth() + 1) + ". " + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes();
+
+        noteRepository.create({ title: this.title, content: this.content, uid: uid, email: email, date: date }, err => {
           if (err) return this.$dispatch("alert", { type: "error", message: "Záznam se nepodařilo vytvořit" });
           this.title = "";
           this.content = "";
