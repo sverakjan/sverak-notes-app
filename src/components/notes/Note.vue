@@ -4,8 +4,10 @@
     <span class="note-email">{{ note.email }}</span>
     <span class="note-date">{{ note.date }}</span>
     <pre class="note-content">{{ note.content }}</pre>
-    <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
-    <button class="edit" type="button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+    <div class="note-buttons">
+      <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
+      <button class="edit" type="button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+    </div>
   </div>
 </template>
 <script>
@@ -31,11 +33,6 @@ export default {
 };
 </script>
 <style>
-.notes {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .note {
   background: #fff;
   border-radius: 7px;
@@ -44,10 +41,11 @@ export default {
   padding-bottom: 10px;
   transition: box-shadow 0.2s, transform 0.2s;
   cursor: default;
-
   margin: 10px;
-
   width: calc(25% - 20px);
+
+  display: flex;
+  flex-direction: column;
 }
 .note.medium {
   width: calc(50% - 20px);
@@ -78,6 +76,11 @@ export default {
   word-wrap: break-word;
   font-family: inherit;
 }
+
+.note-buttons {
+  margin-top: auto;
+}
+
 .note button {
   color: #777;
   border: none;

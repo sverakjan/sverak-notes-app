@@ -1,5 +1,6 @@
 import firebase from "./firebase";
 import EventEmitter from "events";
+import Auth from "../data/Auth";
 
 // extend EventEmitter so user of NoteRepository can react to our own defined events (ex: noteRepository.on('added'))
 class NoteRepository extends EventEmitter {
@@ -20,8 +21,8 @@ class NoteRepository extends EventEmitter {
   }
   // updates a note
   update({ key, title = "", content = "" }, onComplete) {
+    content = Auth.getAuth().currentUser.email + ": " + content;
     this.notesRef.child(key).update({ title, content }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
-    // new Firebase(`https://gkeep-vueifire2.firebaseio.com/notes/${key}`).update(...)
   }
   // removes a note
   remove({ key }, onComplete) {

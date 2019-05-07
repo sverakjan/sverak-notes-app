@@ -1,7 +1,7 @@
 <template>
   <form class="create-note" v-on:submit.prevent="createNote">
     <input name="title" v-model="title" placeholder="Titulek" />
-    <textarea name="content" v-model="content" placeholder="Text záznamu..." rows="3"></textarea>
+    <textarea name="content" v-model="content" placeholder="Text záznamu" rows="3"></textarea>
     <button type="submit">Uložit</button>
   </form>
 </template>
@@ -30,6 +30,20 @@ export default {
           this.title = "";
           this.content = "";
           this.$dispatch("alert", { type: "success", message: "Záznam vytvořen" });
+
+          if ($(".notes").hasClass("oldest")) {
+            $(".note").each(function() {
+              $(this).removeAttr("style");
+            });
+
+            var notesCount = $(".note").length;
+
+            $(".note").each(function() {
+              $(this).css("order", notesCount);
+
+              notesCount -= 1;
+            });
+          }
         });
       }
     }
@@ -39,14 +53,12 @@ export default {
 <style>
 form.create-note {
   position: relative;
-  max-width: calc(100% - 80px);
-  width: 500px;
-
+  width: calc(50% - 20px);
   height: 200px;
-  max-width: 100%;
-  margin: 30px auto;
-  margin-top: 0;
   background: #fff;
+
+  margin: 0 auto;
+  margin-bottom: 20px;
   padding: 20px;
   border-radius: 2px;
   box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);

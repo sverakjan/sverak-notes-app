@@ -40,6 +40,7 @@ export default {
   right: 0;
   bottom: 0;
   background: rgba(50, 50, 50, 0.8);
+  z-index: 10;
 }
 form.edit-note {
   position: relative;

@@ -2,6 +2,18 @@
   <div class="wrapper">
     <div class="app-container">
       <create-note-form></create-note-form>
+      <div class="filters">
+        <div class="order">
+          <span class="filter-title">Řadit od:</span>
+          <div>
+            <span class="order-new active">Nejnovějšího</span>
+            <span class="order-old">Nejstaršího</span>
+          </div>
+        </div>
+        <div class="order">
+          <span class="filter-title">Filtrovat autora:</span>
+        </div>
+      </div>
       <notes></notes>
       <update-modal :note.sync="selectedNote"></update-modal>
     </div>
@@ -508,14 +520,14 @@ $(document).ready(function() {
   $(".sign-out-button").click(function() {
     guideInitCheck();
   });
+
+  orderSort();
 });
 
 function guideInitCheck() {
   clearInterval(guideTimer);
 
   var guideTimer = setInterval(function() {
-    console.log("jedu");
-
     if ($(".guide-item").length > 0) {
       clearInterval(guideTimer);
 
@@ -536,24 +548,116 @@ function guideInit() {
     $(this).toggleClass("open");
   });
 }
+
+function orderSort() {
+  $(".order-new").click(function() {
+    $(".order-old").removeClass("active");
+    $(".order-new").addClass("active");
+
+    $(".notes").removeClass("oldest");
+
+    $(".note").each(function() {
+      $(this).removeAttr("style");
+    });
+  });
+
+  $(".order-old").click(function() {
+    $(".order-new").removeClass("active");
+    $(".order-old").addClass("active");
+
+    $(".notes").addClass("oldest");
+
+    var notesCount = $(".note").length;
+
+    $(".note").each(function() {
+      $(this).css("order", notesCount);
+
+      notesCount -= 1;
+    });
+  });
+}
 </script>
 <style>
 .wrapper {
   position: relative;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 130px);
 }
 
 .app-container {
-  width: calc(100% - 400px);
+  width: calc(100% - 350px);
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 10px;
   padding-top: 30px;
   background-color: #f5f5f5;
 }
 
+.filters {
+  width: calc(50% - 20px);
+  margin: 0 auto;
+  margin-bottom: 30px;
+  display: flex;
+}
+
+.filter-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.order {
+  width: 50%;
+}
+
+.order div {
+  display: flex;
+}
+
+.order-new {
+  margin-right: 5px;
+}
+
+.order-new,
+.order-old {
+  padding: 5px 0;
+  cursor: pointer;
+  color: #cfd8dc;
+  border-radius: 4px;
+  display: block;
+  width: 110px;
+  text-align: center;
+  background: #cfd8dc;
+  color: black;
+  margin-bottom: 5px;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+.order-new:hover,
+.order-old:hover {
+  background: #b0bec5;
+}
+
+.order .active {
+  background: #66bb6a;
+  color: #fff;
+  cursor: default;
+}
+
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.notes.oldest {
+}
+
+.oldest .note {
+  order: 99999;
+}
+
 .guide-container {
-  width: 400px;
+  width: 350px;
   height: 100%;
   background: white;
   position: absolute;

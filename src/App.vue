@@ -3,6 +3,11 @@
     <header-bar></header-bar>
     <alerts :alerts="alerts"></alerts>
     <router-view></router-view>
+    <footer>
+      <span>
+        Jan Svěrák - České Budějovice 2018
+      </span>
+    </footer>
   </div>
 </template>
 <script>
@@ -48,8 +53,8 @@ body {
 body > div {
   /* padding: 50px 16px; */
   /* padding-top: 50px; */
-  padding-top: 50px;
-  padding-bottom: 0;
+  padding-top: 100px;
+  padding-bottom: 30px;
   min-height: 100vh;
   background: #eee;
   position: relative;
@@ -57,26 +62,27 @@ body > div {
   z-index: 1;
   /* box-shadow: 0 2px 5px #111; */
 }
+
 footer {
-  background: #333;
-  color: #fff;
-  text-align: center;
-  padding: 12px 0 10px;
+  box-shadow: 0 0 10px 1px rgba(161, 161, 161, 0.37);
+  background: white;
   position: fixed;
   bottom: 0;
-  height: 50px;
+  left: 0;
   width: 100%;
+  height: 30px;
+  padding: 0 15px;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-footer a {
-  color: #e03c3c;
+
+footer span {
+  font-size: 15px;
 }
-footer .fa-heart {
-  margin: 0 10px 0 0;
-}
-footer iframe {
-  position: relative;
-  top: 4px;
-}
+
 .clearfix:after {
   content: "";
   display: table;
