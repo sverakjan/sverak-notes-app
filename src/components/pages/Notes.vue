@@ -21,7 +21,10 @@
       <notes></notes>
       <update-modal :note.sync="selectedNote"></update-modal>
     </div>
-    <div class="guide-container">
+    <span class="guide-button open">
+      <i class="fa fa-book"></i>
+    </span>
+    <div class="guide-container open">
       <div class="item-section">
         <h2 class="item-heading">
           <i class="fa fa-database" aria-hidden="true"></i>
@@ -562,6 +565,11 @@ function guideInit() {
       .toggleClass("open");
     $(this).toggleClass("open");
   });
+
+  $(".guide-button").click(function() {
+    $(this).toggleClass("open");
+    $(".guide-container").toggleClass("open");
+  });
 }
 
 function orderSort() {
@@ -893,5 +901,84 @@ function filterAuthor() {
 .file-line {
   color: gray;
   font-style: italic;
+}
+
+@media (max-width: 1400px) {
+  .app-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .guide-container {
+    position: fixed;
+    top: 100px;
+    right: 0;
+    transition: transform 0.2s;
+    transform: translateX(350px);
+  }
+
+  .guide-button {
+    width: 40px;
+    height: 40px;
+    background: #66bb6a;
+    position: absolute;
+    top: 0;
+    right: 350px;
+    transition: transform 0.2s, background-color 0.2s;
+    transform: translateX(350px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px 0 0 4px;
+    color: white;
+  }
+
+  .guide-button:hover {
+    cursor: pointer;
+    background: #43a047;
+  }
+
+  .guide-button i {
+    font-size: 20px;
+  }
+
+  .guide-container.open,
+  .guide-button.open {
+    transform: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .filters {
+    width: 300px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .order {
+    width: 100%;
+    max-width: 227px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+  }
+
+  .author {
+    width: 100%;
+    max-width: 227px;
+  }
+}
+
+@media (max-width: 390px) {
+  .guide-container {
+    width: 280px;
+
+    transform: translateX(280px);
+  }
+
+  .guide-button {
+    right: 280px;
+    transform: translateX(280px);
+  }
 }
 </style>

@@ -2,7 +2,7 @@
   <form class="create-note" v-on:submit.prevent="createNote">
     <input name="title" v-model="title" placeholder="Titulek" />
     <textarea name="content" v-model="content" placeholder="Text záznamu" rows="3"></textarea>
-    <button type="submit">Uložit</button>
+    <button type="submit">Přidat záznam</button>
   </form>
 </template>
 <script>
@@ -106,11 +106,11 @@ form.create-note button {
   color: #fff;
   border: none;
   border-radius: 4px;
-  width: 80px;
+  width: 150px;
   height: 40px;
   cursor: pointer;
   outline: none;
-  font-size: 20px;
+  font-size: 18px;
   transition: background-color 0.2s;
 }
 

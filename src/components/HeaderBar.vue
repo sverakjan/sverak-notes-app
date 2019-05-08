@@ -82,23 +82,33 @@ header {
 
 .header-title {
   font-size: 20px;
-  max-width: 470px;
+  width: 425px;
+  flex-shrink: 0;
+  margin-right: 50px;
 }
 
 .header-links {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 30px;
 }
 
 .header-links a {
   color: black;
   text-decoration: none;
+  margin: 5px 0;
+  display: flex;
+  align-items: flex-start;
+}
 
-  margin: 10px 0;
+.header-links a:first-child {
   margin-right: 20px;
 }
 
 .header-links i {
   font-size: 18px;
   margin-left: 5px;
+  transform: translateY(2px);
 }
 .header-links span {
   text-decoration: underline;
@@ -114,6 +124,9 @@ header {
 
 .user-title {
   margin-right: 10px;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-user {
@@ -129,5 +142,55 @@ header {
 
 .sign-out-button.hidden {
   display: none;
+}
+
+@media (max-width: 1000px) {
+  .header-title {
+    font-size: 18px;
+    width: 210px;
+    margin-right: 45px;
+  }
+
+  .header-links {
+    margin-right: 0;
+  }
+
+  .header-links a {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 749px) {
+  header {
+    padding: 10px 15px;
+  }
+
+  .header-title {
+    font-size: 16px;
+    width: 190px;
+    margin-right: 25px;
+  }
+
+  .header-links {
+    width: 28px;
+  }
+
+  .header-links a {
+    margin: 8px 0;
+  }
+
+  .header-links span {
+    display: none;
+  }
+
+  .header-links i {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 530px) {
+  .user-title {
+    display: none;
+  }
 }
 </style>

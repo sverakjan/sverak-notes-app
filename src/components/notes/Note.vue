@@ -119,9 +119,33 @@ export default {
   color: #66bb6a;
 }
 
+.note button.edit:focus {
+  outline: none;
+}
+
 .note button.delete:hover {
   /* background: #d32f2f; */
   /* color: white; */
   color: #d32f2f;
+}
+
+.note button.delete:focus {
+  outline: none;
+}
+
+@media (max-width: 1100px) {
+  .note {
+    width: calc(50% - 20px);
+  }
+
+  .note.medium {
+    width: calc(100% - 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  .note {
+    width: calc(100% - 20px);
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <form class="auth-form" v-on:submit.prevent="wantsToSignUp ? signUpWithPassword() : signInWithPassword()">
-    <h1>{{ wantsToSignUp ? "Registrovat" : "Přihlásit" }}</h1>
+    <h1>{{ wantsToSignUp ? "Registrovat" : "Přihlásit se" }}</h1>
     <div>
       <label for="email">Email</label>
       <input type="email" name="email" id="email" required v-model="email" />
@@ -14,11 +14,11 @@
       <input type="password" name="confirm-password" id="confirm-password" v-model="confirmPassword" />
     </div>
     <div v-show="!wantsToSignUp" class="clearfix btn-group">
-      <button type="submit">Přihlásit se</button>
+      <button class="primary" type="submit">Přihlásit se</button>
       <button type="button" v-on:click="wantsToSignUp = true">Registrovat</button>
     </div>
     <div v-show="wantsToSignUp">
-      <button type="submit" class="signup-submit">Registrovat</button>
+      <button class="single primary" type="submit" class="signup-submit">Registrovat</button>
     </div>
   </form>
 </template>
@@ -67,16 +67,18 @@ export default {
 <style>
 .auth-form {
   width: 480px;
-  max-width: 100%;
+  max-width: calc(100% - 30px);
   background: #fff;
   margin: 0 auto;
   padding: 15px;
   margin-top: 150px;
+  margin-bottom: 50px;
   border-radius: 7px;
   box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
 }
 .auth-form h1 {
-  font-weight: 300;
+  font-size: 30px;
+  font-weight: 400;
 }
 .auth-form > div {
   margin-top: 15px;
@@ -90,28 +92,55 @@ export default {
   font-size: 14px !important;
   padding-left: 10px;
 }
-.auth-form input:focus {
-  border-bottom-color: #555;
-}
+
 .auth-form label,
 .auth-form input {
   display: block;
   width: 100%;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-size: 18px;
 }
+
+.auth-form input:focus {
+  outline: none;
+}
+
 .auth-form button {
   font-size: 18px;
   background: #fff;
-  border: 1px solid #41b883;
   padding: 4px 6px;
   margin: 0;
   border-radius: 4px;
   cursor: pointer;
   color: black;
-
   height: 40px;
-  font-size: 20px;
+  font-size: 18px;
+  border: none;
+  background: #cfd8dc;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.auth-form button:hover {
+  background: #b0bec5;
+}
+
+.auth-form button.primary {
+  background: #66bb6a;
+  color: white;
+}
+
+.auth-form button.primary:hover {
+  background: #43a047;
+}
+
+.auth-form button.single {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.auth-form button:focus {
+  outline: none;
 }
 
 .auth-form .btn-group {
@@ -142,5 +171,17 @@ export default {
   color: #41b883;
   font-size: 36px;
   padding: 4px;
+}
+
+@media (max-width: 1000px) {
+  .auth-form {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 749px) {
+  .auth-form {
+    margin-top: 40px;
+  }
 }
 </style>

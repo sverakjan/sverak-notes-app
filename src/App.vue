@@ -5,7 +5,7 @@
     <router-view></router-view>
     <footer>
       <span>
-        Jan Svěrák - České Budějovice 2018
+        Jan Svěrák - České Budějovice 2019
       </span>
     </footer>
   </div>
@@ -56,7 +56,7 @@ body > div {
   padding-top: 100px;
   padding-bottom: 30px;
   min-height: 100vh;
-  background: #eee;
+  background-color: #f5f5f5;
   position: relative;
   /* margin-bottom: 50px; */
   z-index: 1;
