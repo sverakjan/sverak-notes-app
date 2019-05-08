@@ -60,7 +60,6 @@ export default {
       this.$router.go({ name: "notes" });
 
       HeaderBar.onSignIn();
-      Notes.guideInitInit();
     }
   }
 };

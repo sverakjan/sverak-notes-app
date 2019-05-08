@@ -50,6 +50,11 @@ export default {
 .note.medium {
   width: calc(50% - 20px);
 }
+
+.note.hidden {
+  display: none;
+}
+
 .note-title {
   font-size: 1.2rem;
   margin-bottom: 5px;
@@ -60,6 +65,7 @@ export default {
   font-size: 0.85rem;
   display: block;
   color: gray;
+  word-break: break-all;
 }
 
 .note-date {

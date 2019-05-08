@@ -31,6 +31,7 @@ export default {
           this.content = "";
           this.$dispatch("alert", { type: "success", message: "Záznam vytvořen" });
 
+          //If sorted by oldest
           if ($(".notes").hasClass("oldest")) {
             $(".note").each(function() {
               $(this).removeAttr("style");
@@ -44,16 +45,34 @@ export default {
               notesCount -= 1;
             });
           }
+
+          //If filtered by author
+          if ($(".filter-current").text() != "Všichni") {
+            $(".note").each(function() {
+              if (
+                $(this)
+                  .find(".note-email")
+                  .text() != $(".filter-current").text()
+              ) {
+                $(this).addClass("hidden");
+              }
+            });
+          }
         });
       }
     }
   }
 };
+
+function tesX() {
+  console.log("ahoj sem tu kámo");
+}
 </script>
 <style>
 form.create-note {
   position: relative;
-  width: calc(50% - 20px);
+  max-width: calc(100% - 30px);
+  width: 550px;
   height: 200px;
   background: #fff;
 

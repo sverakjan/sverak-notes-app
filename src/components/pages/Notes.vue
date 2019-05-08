@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="app-container">
       <create-note-form></create-note-form>
-      <div class="filters">
+      <div class="filters hidden">
         <div class="order">
           <span class="filter-title">Řadit od:</span>
           <div>
@@ -10,8 +10,12 @@
             <span class="order-old">Nejstaršího</span>
           </div>
         </div>
-        <div class="order">
+        <div class="author">
           <span class="filter-title">Filtrovat autora:</span>
+          <span class="filter-current">Všichni</span>
+          <div class="filter-list hidden">
+            <div class="filter-list-inner"></div>
+          </div>
         </div>
       </div>
       <notes></notes>
@@ -509,19 +513,17 @@ export default {
     "note.selected": function(note) {
       this.selectedNote = note;
     }
-  },
-  guideInitInit() {
-    console.log("sup boi");
   }
 };
+
 $(document).ready(function() {
   guideInitCheck();
+  notesInitCheck();
 
   $(".sign-out-button").click(function() {
     guideInitCheck();
+    notesInitCheck();
   });
-
-  orderSort();
 });
 
 function guideInitCheck() {
@@ -532,6 +534,19 @@ function guideInitCheck() {
       clearInterval(guideTimer);
 
       guideInit();
+    }
+  }, 100);
+}
+
+function notesInitCheck() {
+  clearInterval(notesTimer);
+
+  var notesTimer = setInterval(function() {
+    if ($(".note").length > 0) {
+      clearInterval(notesTimer);
+
+      orderSort();
+      filterAuthorInit();
     }
   }, 100);
 }
@@ -550,6 +565,8 @@ function guideInit() {
 }
 
 function orderSort() {
+  $(".filters").removeClass("hidden");
+
   $(".order-new").click(function() {
     $(".order-old").removeClass("active");
     $(".order-new").addClass("active");
@@ -576,6 +593,64 @@ function orderSort() {
     });
   });
 }
+
+function filterAuthorInit() {
+  var notesCount = 0;
+  var namesArr = ["Všichni"];
+
+  $(".note").each(function() {
+    var thisEmail = $(this)
+      .find(".note-email")
+      .text();
+    var presenceCheck = false;
+
+    for (var i = 0; i < namesArr.length; i++) {
+      if (thisEmail === namesArr[i]) {
+        presenceCheck = true;
+      }
+    }
+
+    if (presenceCheck === false) {
+      namesArr.push(thisEmail);
+    }
+  });
+
+  for (var j = 0; j < namesArr.length; j++) {
+    $(".filter-list-inner").append('<span class="filter-item">' + namesArr[j] + "</span>");
+  }
+
+  filterAuthor();
+}
+
+function filterAuthor() {
+  $(".filter-current").click(function() {
+    $(".filter-list").removeClass("hidden");
+  });
+
+  $(".filter-item").click(function() {
+    $(".filter-list").addClass("hidden");
+
+    var filteredEmail = $(this).text();
+
+    $(".note").each(function() {
+      $(this).removeClass("hidden");
+    });
+
+    if (filteredEmail != "Všichni") {
+      $(".note").each(function() {
+        if (
+          $(this)
+            .find(".note-email")
+            .text() != filteredEmail
+        ) {
+          $(this).addClass("hidden");
+        }
+      });
+    }
+
+    $(".filter-current").text(filteredEmail);
+  });
+}
 </script>
 <style>
 .wrapper {
@@ -593,10 +668,15 @@ function orderSort() {
 }
 
 .filters {
-  width: calc(50% - 20px);
+  max-width: calc(100% - 30px);
+  width: 550px;
   margin: 0 auto;
   margin-bottom: 30px;
   display: flex;
+}
+
+.filters.hidden {
+  visibility: hidden;
 }
 
 .filter-title {
@@ -619,12 +699,10 @@ function orderSort() {
 
 .order-new,
 .order-old {
-  padding: 5px 0;
+  padding: 5px 10px;
   cursor: pointer;
-  color: #cfd8dc;
   border-radius: 4px;
   display: block;
-  width: 110px;
   text-align: center;
   background: #cfd8dc;
   color: black;
@@ -644,12 +722,72 @@ function orderSort() {
   cursor: default;
 }
 
+.author {
+  width: 50%;
+}
+
+.filter-current {
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: block;
+  text-align: center;
+  background: #66bb6a;
+  color: white;
+  transition: background-color 0.2s;
+  user-select: none;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+.filter-list.hidden {
+  display: none;
+}
+
+.filter-list-inner {
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}
+
+.filter-item {
+  display: block;
+  text-align: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: #cfd8dc;
+  display: block;
+  text-align: center;
+  background: #cfd8dc;
+  color: black;
+  transition: background-color 0.2s;
+  user-select: none;
+  word-break: break-all;
+}
+
+.filter-item:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.filter-item:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
+.filter-item:hover {
+  background: #b0bec5;
+}
+
 .notes {
   display: flex;
   flex-wrap: wrap;
-}
-
-.notes.oldest {
 }
 
 .oldest .note {
