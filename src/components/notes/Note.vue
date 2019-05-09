@@ -6,7 +6,7 @@
     <pre class="note-content">{{ note.content }}</pre>
     <div class="note-buttons">
       <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
-      <button class="edit" type="button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+      <button class="edit" type="button" v-on:click="selectNote(note)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
     </div>
   </div>
 </template>
@@ -28,6 +28,11 @@ export default {
       noteRepository.remove(this.note, err => {
         if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznamu odstranit" });
       });
+    },
+    selectNote({ key, title, content }) {
+      // notify listeners that user selected a note
+      // pass in a copy of the note to prevent edits on the original note in the array
+      this.$dispatch("note.selected", { key, title, content });
     }
   }
 };
@@ -103,9 +108,9 @@ export default {
 
 .note:hover,
 .note:focus {
-  box-shadow: 0 7px 10px 0px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
-  cursor: pointer;
+  /* box-shadow: 0 7px 10px 0px rgba(0, 0, 0, 0.1); */
+  /* transform: translateY(-5px); */
+  /* cursor: pointer; */
 }
 .note:hover button,
 .note:focus button {

@@ -45,7 +45,7 @@ export default {
 form.edit-note {
   position: relative;
   width: 480px;
-  max-width: 100%;
+  max-width: calc(100% - 30px);
   margin: 25vh auto 0;
   background: #fff;
   padding: 15px;
@@ -63,6 +63,11 @@ form.edit-note textarea {
   resize: none;
   margin-bottom: 20px;
 }
+
+form.edit-note textarea {
+  margin-bottom: 40px;
+}
+
 form.edit-note button[type="submit"] {
   position: absolute;
   right: 10px;

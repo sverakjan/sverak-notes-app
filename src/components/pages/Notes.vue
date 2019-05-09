@@ -21,10 +21,10 @@
       <notes></notes>
       <update-modal :note.sync="selectedNote"></update-modal>
     </div>
-    <span class="guide-button open">
+    <span class="guide-button">
       <i class="fa fa-book"></i>
     </span>
-    <div class="guide-container open">
+    <div class="guide-container">
       <div class="item-section">
         <h2 class="item-heading">
           <i class="fa fa-database" aria-hidden="true"></i>
@@ -550,6 +550,7 @@ function notesInitCheck() {
 
       orderSort();
       filterAuthorInit();
+      editBlock();
     }
   }, 100);
 }
@@ -659,6 +660,27 @@ function filterAuthor() {
     $(".filter-current").text(filteredEmail);
   });
 }
+
+function editBlock() {
+  var currentUser = $(".user-title").text();
+
+  $(".note").each(function() {
+    if (
+      $(this)
+        .find(".note-email")
+        .text() != currentUser
+    ) {
+      $(this)
+        .find("button.edit")
+        .remove();
+      $(this)
+        .find("button.delete")
+        .remove();
+    }
+  });
+
+  console.log(currentUser);
+}
 </script>
 <style>
 .wrapper {
@@ -747,6 +769,10 @@ function filterAuthor() {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.filter-current:hover {
+  background: #43a047;
 }
 
 .filter-list {

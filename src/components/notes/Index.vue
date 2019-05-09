@@ -1,6 +1,6 @@
 <template>
   <div class="notes" v-el:notes>
-    <note v-for="note in filteredNotes" :note="note" v-on:click="selectNote(note)"></note>
+    <note v-for="note in filteredNotes" :note="note"></note>
   </div>
 </template>
 <script>
