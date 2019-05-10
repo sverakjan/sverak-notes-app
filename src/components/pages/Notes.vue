@@ -20,6 +20,7 @@
       </div>
       <notes></notes>
       <update-modal :note.sync="selectedNote"></update-modal>
+      <comment-modal :notex.sync="selectedNoteComment"></comment-modal>
     </div>
     <span class="guide-button">
       <i class="fa fa-book"></i>
@@ -500,21 +501,27 @@ noteRepository.on('removed', ({key}) => {
 import Notes from "src/components/notes/Index";
 import CreateNoteForm from "src/components/notes/Create";
 import UpdateModal from "src/components/notes/UpdateModal";
+import CommentModal from "src/components/notes/CommentModal";
 import { functions } from "firebase";
 export default {
   components: {
     Notes,
     CreateNoteForm,
-    UpdateModal
+    UpdateModal,
+    CommentModal
   },
   data() {
     return {
-      selectedNote: null
+      selectedNote: null,
+      selectedNoteComment: null
     };
   },
   events: {
     "note.selected": function(note) {
       this.selectedNote = note;
+    },
+    "notex.selected": function(note) {
+      this.selectedNoteComment = note;
     }
   }
 };
@@ -678,8 +685,6 @@ function editBlock() {
         .remove();
     }
   });
-
-  console.log(currentUser);
 }
 </script>
 <style>

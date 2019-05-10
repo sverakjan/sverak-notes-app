@@ -17,13 +17,7 @@ export default {
       searchQuery: ""
     };
   },
-  methods: {
-    selectNote({ key, title, content }) {
-      // notify listeners that user selected a note
-      // pass in a copy of the note to prevent edits on the original note in the array
-      this.$dispatch("note.selected", { key, title, content });
-    }
-  },
+  methods: {},
   computed: {
     filteredNotes() {
       return this.notes.filter(note => {
@@ -32,20 +26,15 @@ export default {
       });
     }
   },
-  watch: {},
-  events: {
-    search: function(searchQuery) {
-      this.searchQuery = searchQuery;
-    }
-  },
   ready() {
     noteRepository.on("added", note => {
       this.notes.unshift(note); // add the note to the beginning of the array
     });
-    noteRepository.on("changed", ({ key, title, content }) => {
+    noteRepository.on("changed", ({ key, title, content, comments }) => {
       let note = noteRepository.find(this.notes, key); // get specific note from the notes in our VM by key
       note.title = title;
       note.content = content;
+      note.comments = comments;
     });
     noteRepository.on("removed", ({ key }) => {
       let note = noteRepository.find(this.notes, key); // get specific note from the notes in our VM by key
@@ -55,8 +44,3 @@ export default {
   }
 };
 </script>
-<style>
-.notes {
-  margin: 0 auto;
-}
-</style>

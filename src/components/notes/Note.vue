@@ -1,19 +1,26 @@
 <template>
   <div class="note" v-bind:class="[size]">
     <h2 class="note-title">{{ note.title }}</h2>
-    <span class="note-email">{{ note.email }}</span>
+    <span class="note-author">{{ note.email }}</span>
     <span class="note-date">{{ note.date }}</span>
     <pre class="note-content">{{ note.content }}</pre>
+    <div class="comments">
+      <div class="comment" v-for="comment in note.comments">
+        <div class="comment-author">{{ comment[0] }}</div>
+        <div class="comment-content">{{ comment[1] }}</div>
+      </div>
+    </div>
     <div class="note-buttons">
       <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
       <button class="edit" type="button" v-on:click="selectNote(note)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+      <button class="comment" type="button" v-on:click="selectNoteComment(note)"><i class="fa fa-comments" aria-hidden="true"></i></button>
     </div>
   </div>
 </template>
 <script>
 import noteRepository from "../../data/NoteRepository";
 export default {
-  props: ["note"],
+  props: ["note", "notex"],
   computed: {
     size() {
       let length = this.note.content.length;
@@ -33,6 +40,12 @@ export default {
       // notify listeners that user selected a note
       // pass in a copy of the note to prevent edits on the original note in the array
       this.$dispatch("note.selected", { key, title, content });
+    },
+    selectNoteComment({ key, title, content, comments }) {
+      // notify listeners that user selected a note
+      // pass in a copy of the note to prevent edits on the original note in the array
+
+      this.$dispatch("notex.selected", { key, title, content, comments });
     }
   }
 };
@@ -66,7 +79,7 @@ export default {
   word-wrap: break-word;
 }
 
-.note-email {
+.note-author {
   font-size: 0.85rem;
   display: block;
   color: gray;
@@ -117,15 +130,19 @@ export default {
   /* opacity: 0.6; */
 }
 
+.note button:focus {
+  outline: none;
+}
+
 .note button.edit {
+}
+
+.note button.comment:hover {
+  color: #66bb6a;
 }
 
 .note button.edit:hover {
   color: #66bb6a;
-}
-
-.note button.edit:focus {
-  outline: none;
 }
 
 .note button.delete:hover {
@@ -134,8 +151,22 @@ export default {
   color: #d32f2f;
 }
 
-.note button.delete:focus {
-  outline: none;
+.comment {
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.comment-author {
+  font-size: 0.85rem;
+  display: block;
+  color: gray;
+  word-break: break-all;
+}
+
+.comment-content {
+  font-size: 15px;
 }
 
 @media (max-width: 1100px) {

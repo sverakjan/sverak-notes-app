@@ -63,10 +63,6 @@ export default {
     }
   }
 };
-
-function tesX() {
-  console.log("ahoj sem tu kámo");
-}
 </script>
 <style>
 form.create-note {
