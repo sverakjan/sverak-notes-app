@@ -1,7 +1,7 @@
 <template>
   <div class="note" v-bind:class="[size]">
     <h2 class="note-title">{{ note.title }}</h2>
-    <span class="note-author">{{ note.email }}</span>
+    <span class="note-email">{{ note.email }}</span>
     <span class="note-date">{{ note.date }}</span>
     <pre class="note-content">{{ note.content }}</pre>
     <div class="comments">
@@ -79,7 +79,7 @@ export default {
   word-wrap: break-word;
 }
 
-.note-author {
+.note-email {
   font-size: 0.85rem;
   display: block;
   color: gray;
@@ -152,16 +152,22 @@ export default {
 }
 
 .comment {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color: #f5f5f5;
   border-radius: 4px;
-  padding: 5px;
+  padding: 10px 8px;
+}
+
+.comment.hidden {
+  opacity: 0;
 }
 
 .comment-author {
   font-size: 0.85rem;
   display: block;
   color: gray;
+  word-break: break-all;
+  margin-bottom: 5px;
   word-break: break-all;
 }
 

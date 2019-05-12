@@ -29,6 +29,16 @@ export default {
   ready() {
     noteRepository.on("added", note => {
       this.notes.unshift(note); // add the note to the beginning of the array
+
+      setTimeout(function() {
+        $(".comment-author").each(function() {
+          if ($(this).text() === "") {
+            $(this)
+              .closest(".comment")
+              .addClass("hidden");
+          }
+        });
+      }, 0);
     });
     noteRepository.on("changed", ({ key, title, content, comments }) => {
       let note = noteRepository.find(this.notes, key); // get specific note from the notes in our VM by key

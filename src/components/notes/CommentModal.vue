@@ -12,7 +12,6 @@ export default {
   props: ["notex"],
   methods: {
     comment() {
-      console.log($(".comment-textarea").val());
       if ($(".comment-textarea").val() != "") {
         noteRepository.comment(this.notex, err => {
           if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se komentář přidat" });

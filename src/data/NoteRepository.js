@@ -16,7 +16,7 @@ class NoteRepository extends EventEmitter {
     var database = firebase.database();
   }
   // creates a note
-  create({ title = "", content = "", uid = "", email = "", date = "", comments = [""] }, onComplete) {
+  create({ title = "", content = "", uid = "", email = "", date = "", comments = [["", ""]] }, onComplete) {
     this.notesRef.push({ title, content, uid, email, date, comments }, onComplete);
   }
   // updates a note
@@ -26,7 +26,7 @@ class NoteRepository extends EventEmitter {
   }
   // comments on a note
   comment({ key, title = "", content = "", comments = [], newcomment }, onComplete) {
-    if (comments[0] === "") {
+    if (comments[0][0] === "") {
       comments.shift();
     }
     comments.push([Auth.getAuth().currentUser.email, newcomment]);

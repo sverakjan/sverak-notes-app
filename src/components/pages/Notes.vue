@@ -38,14 +38,17 @@
           <pre>
 
 <span class="file-line">Firebase.js:1</span>
-
 import * as firebase from "firebase";
 			</pre>
-
+          <p>Příkaz pro importování samotné Firebase databáze.</p>
           <p>
-            Firebase je součástí NPM jako balíče, proto můžeme Firebase jednoduše přidat do projektu pomocí příkazu
+            Firebase je součástí NPM jako balíček, proto můžeme Firebase jednoduše přidat do projektu pomocí příkazu:
             <code>npm i firebase --save</code>
             .
+          </p>
+
+          <p>
+            Poté již lze s Firebase v projektu dále pracovat. Pro lepší přehlednost kódu je pro základní práci s databází vytvořen soubor Firebase.js
           </p>
         </div>
 
@@ -62,22 +65,29 @@ const config = {
   projectId: "sverak-notes-app"
 };
 			</pre>
+          <p>Konstanta, jež obsahuje konfigurační údaje pro samotnou databázi.</p>
+          <p>
+            Nejdůležitější položka při inicializaci je tzv.
+            <code>apiKey</code>
+            . Bez vygenerovaného klíče není možné přistupovat k Firebase API.
+          </p>
+          <p>
+            <code>authDomain</code>
+            - doména k autentizaci
+          </p>
+          <p>
+            <code>databaseURL</code>
+            - adresa databáze
+          </p>
+          <p>
+            <code>projectId</code>
+            - Jedinečné id projektu, vybírané při tvorbě projektu v administraci firebase.
+          </p>
 
           <p>
-            <code>apiKey:</code>
-            nejdůležitější položka při inicializaci, bez vygenerovaného klíče není možné přistupovat k API
-          </p>
-          <p>
-            <code>authDomain:</code>
-            doména k autentizaci
-          </p>
-          <p>
-            <code>databaseURL:</code>
-            adresa databáze
-          </p>
-          <p>
-            <code>projectId:</code>
-            Jedinečné id projektu, vybírané při tvorbě projektu v administraci firebase.
+            Tyto údaje můžeme získat po registraci a vytvoření projektu na stránkách Firebase určených pro vývojáře:
+            <a href="console.firebase.google.com" target="_blank">console.firebase.google.com</a>
+            . V administraci projektu je nám tento kód rovnou poskytnut na základě vyplněných informací, jako například jméno projektu.
           </p>
         </div>
 
@@ -89,8 +99,9 @@ const config = {
 
 export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 			</pre>
+          <p>Posledním krokem inicializace databáze je exportování</p>
 
-          <p>Tento export nám umožnuje přístup k databázi, bez nutnosti inicializace v každém souboru, kde k téže databázi přistupujeme a tím zabraňuje redundantnosti a možným chybám s tím spojeným.</p>
+          <p>Tento export nám umožňuje přístup k databázi, bez nutnosti inicializace v každém souboru, kde k téže databázi přistupujeme a tím zabraňujeme redundantnosti a možným chybám s tím spojeným.</p>
         </div>
       </div>
 
@@ -114,11 +125,14 @@ constructor () {
 }
 			</pre>
 
+          <p>Abychom mohli uživateli vypsat záznamy musíme mít přistup k databázi, kde jsou uložené. Díky výše zmíněné konfiguraci a exportu můžeme nyní k databázi jednoduše přistupovat.</p>
+
           <p><strong>Reference pro zápis a čtení z databáze</strong></p>
 
           <p>
-            V tomto případě, budou všechny záznamy do databáze a čtení z databáze na větvi
+            V našem případě, budou všechny zápisy do databáze a čtení z databáze na větvi
             <code>notes</code>
+            . Pro usnadnění přístupu je tedy opět s oboru NoteRepository.js připravena funkce:
           </p>
 
           <pre>
@@ -128,6 +142,8 @@ get notesRef () {
   return firebase.database().ref(`notes`);
 }
 			</pre>
+          <p>Pro výpis záznamů jsou přitomné tyto dva důležité importy ze souborů:</p>
+
           <pre>
 
 <span class="file-line">Index.vue:13</span>
@@ -137,26 +153,42 @@ import noteRepository from '../../data/NoteRepository'
 			</pre>
 
           <p>
-            Pro výpis záznamů jsou přitomné tyto dva důležité importy ze souborů:
-
+            V souboru
             <code><strong>Note.vue</strong></code>
-            kde mimo jiné najdeme markup pro samotný záznam a
+            mimo jiné najdeme markup pro samotný záznam.
+          </p>
 
-            <code><strong>NoteRepository.js</strong></code>
-            kde získáváme přistup k samotné databázi a událostem jako přidání, aktualizace a smazaní záznamu.
+          <p>V souboru NoteRepository.js získáváme přístup k samotné databázi a událostem jako přidání, aktualizace a smazání záznamu.</p>
+
+          <p>
+            Jednotlivé záznamy jsou přístupné jako pole a u každého záznamu máme přístup ke třem hodnotám:
           </p>
 
           <p>
-            Jednotlivé záznamy jsou přísupné jako pole a u každého záznamu máme přistup ke třem hodnotám
-            <code><strong>note.key</strong></code>
-            (jedinečný identifikátor záznamu),
-            <code><strong>note.title</strong></code>
-            (text titulku) a
+            <code><strong>Note.key</strong></code>
+            (jedinečný identifikátor záznamu).
+          </p>
+
+          <p>
+            <code><strong>Note.title</strong></code>
+            (text titulku).
+          </p>
+
+          <p>
+            <code><strong>Note.email</strong></code>
+            (email autora).
+          </p>
+
+          <p>
+            <code><strong>Note.date</strong></code>
+            (datum přidání).
+          </p>
+
+          <p>
             <code>
-              <strong>note.content</strong>
-              (samotný text záznamu)
+              <strong>Note.content</strong>
+              (samotný text záznamu).
             </code>
-            . Při samotném výpisu záznamu na stránky využijeme poslední dvě zmíněné.
           </p>
         </div>
 
@@ -181,8 +213,12 @@ import noteRepository from '../../data/NoteRepository'
 			</pre>
 
           <p>
-            Markup výpisu jednotlivých záznamů je statický, jedinnou promměnou složkou je text titulku a obsahu záznamu. Tyto hodnoty jsou reprezentovány jako
+            Markup výpisu jednotlivých záznamů je statický, jedinou proměnnou složkou jsou text titulku, author, datum a obsahu záznamu. Tyto hodnoty jsou reprezentovány jako
             <code><strong>note.title</strong></code>
+            ,
+            <code><strong>note.email</strong></code>
+            ,
+            <code><strong>note.date</strong></code>
             a
             <code><strong>note.content</strong></code>
             .
@@ -216,8 +252,9 @@ import noteRepository from '../../data/NoteRepository'
           <p>
             Atribut
             <code><strong>v-on:submit.prevent="createNote"</strong></code>
-            na formuláři říká, jaká funkce bude zavolána po odeslání formuláře:
+            na formuláři říká, jaká funkce bude zavolána po odeslání formuláře. Jedná se o funkci
             <code><strong>CreateNote()</strong></code>
+            .
           </p>
         </div>
 
@@ -236,8 +273,8 @@ createNote () {
   }
 }
 			</pre>
-          <p>A komplexnější varianta s ošetřením chyby a upozorněním pro uživatele:</p>
 
+          <p>Tento zjednodušený kód by nebylo zcela vhodné využít v reálné aplikaci. Využita je tedy komplexnější varianta s ošetření chyby a vypisováním upozornění pro uživatele:</p>
           <pre>
 
 <span class="file-line">Create.vue:20</span>
@@ -257,18 +294,23 @@ createNote () {
           <p>
             Funkce
             <code><strong>this.title.trim()</strong></code>
-            odstraní z řetezce mezery a zalomení řádků. Podmínka tedy bude splněna pokud v hodnotě titulku je nějaký znak, který není
+            odstraní z řetězce mezery a zalomení řádků. Podmínka tedy bude splněna pokud v hodnotě titulku je nějaký znak, který není
             <em>whitespace.</em>
           </p>
 
-          <p>Tato funkce je použita pouze pro kontrolu při tvorbě záznamu, Záznam je poté uložena a i vypysována včerně těchto znaků. Vypisované záznamy jsou tedy i včetně mezer a zalomených řádků.</p>
+          <p>Tato funkce je použita pouze pro kontrolu při tvorbě záznamu. Záznam je poté uložen a vypisován včetně těchto znaků. Vypisované záznamy jsou tedy i včetně mezer a zalomených řádků.</p>
 
           <p>
-            V takovém případě je volána funkce
+            Pokud je tedy tato podmínka splněna, může být posléze volána funkce
             <code><strong>noteRepository.create()</strong></code>
             , které předáváme hodnotu
             <code>title</code>
-            (Titulek) a
+            (Titulek),
+            <code>date</code>
+            (Aktuální datum a čas),
+            <code>email</code>
+            (email přihlášeného uživatele) a
+
             <code>content</code>
             (Text záznamu) z elementů input a textarea.
           </p>
@@ -358,15 +400,15 @@ update () {
             <code><strong>update()</strong></code>
             ve skutečnosti volá funkci ze souboru
             <code><strong>noteRepository</strong></code>
-            a záznam na který bylo klinuto předává funkci jako parametr. Né element záznamu jaký je vykreslený na stránkce, ale
+            a záznam na něž bylo kliknuto předává funkci jako parametr. Ne element záznamu, jaký je vykreslený na stránce pro uživatele, ale hodnotu
             <code><strong>key</strong></code>
-            tedy jednoznačný identifikátor konkrétního záznamu a nové texty zadané ve formuláři modalu.
+            tedy jednoznačný identifikátor konkrétního záznamu
           </p>
 
           <p>
             V případě, že funkce
             <code><strong>noteRepository.update()</strong></code>
-            vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku. Pokud se tak nestane, zamená to že záznam byl úspěšně upraven a uživateli je zobrazena hláška oznamusící úspěch operace.
+            vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku. Pokud se tak nestane, znamená to, že záznam byl úspěšně upraven a uživateli je zobrazena hláška oznamující úspěch operace.
           </p>
         </div>
 
@@ -384,9 +426,9 @@ update ({key, title = '', content = ''}, onComplete) {
 }
 			</pre>
 
-          <p>Funkce na základně klíče najde položku v poli záznamů a pokud byla poskytnuta nová hodnota pro titulek, aktualizuje tuto hodnotu přímo v poli databáze. To samé je provedeno pro hodnotu obsahu záznamu.</p>
+          <p>Funkce na základě dodaného klíče najde položku v poli záznamů a pokud byla poskytnuta nová hodnota pro titulek, aktualizuje tuto hodnotu přímo v poli databáze. To samé je provedeno pro hodnotu obsahu záznamu.</p>
 
-          <p>Tím je záznam aktualizována v databázi, ale na stránce viditelné uživatelem bude vidět stále původní verze.</p>
+          <p>To má za výsledek aktualizace záznamu v databázi, ale na stránce zobrazené uživateli bude stále zobrazena původní neupravená verze záznamu.</p>
         </div>
 
         <div class="guide-item">
@@ -402,7 +444,7 @@ noteRepository.on('changed', ({key, title, content}) => {
 })
 			</pre>
 
-          <p>Poté co je záznam aktualizovan v poli databáze, je vyvolána událost, jež aktualizuje reprezentaci záznamu, kterou vidí na stránce uživatel.</p>
+          <p>Poté co je záznam aktualizován v poli databáze, je vyvolána událost, jež aktualizuje reprezentaci záznamu, kterou vidí na stránce uživatel. Událost je vyvolána automaticky při změně v databázi. Cílem této funkce je pouze synchronizovat obsah stránky, kterou vidí uživatel s aktuálním stavem databáze.</p>
         </div>
       </div>
 
@@ -414,7 +456,7 @@ noteRepository.on('changed', ({key, title, content}) => {
         </h2>
 
         <div class="guide-item">
-          <h3>Odstranění záznamu při kliknutí na tlačítko</h3>
+          <h3>Odstranění záznamu při kliknutí na symbol popelnice</h3>
           <pre>
 
 <span class="file-line">Note.vue:5</span>
@@ -425,9 +467,9 @@ noteRepository.on('changed', ({key, title, content}) => {
           <p>
             Atribut
             <code><strong>v-on:submit.prevent="remove"</strong></code>
-            na tlačítku záznamu říká, jaká funkce (
+            na tlačítku udává, jaké funkce bude volána při kliknutí na tlačítko zobrazovaném jako ikona popelnice. Jedná se o funkci
             <code><strong>remove()</strong></code>
-            ) bude zavolána při kliku na tlačítko zobrazovaném jako ikona popelnice.
+            .
           </p>
         </div>
 
@@ -448,13 +490,9 @@ remove () {
 			</pre>
 
           <p>
-            Funkce
+            Obdobně jako funkce update() i funkce
             <code><strong>remove()</strong></code>
-            ve skutečnosti volá funkci ze souboru
-            <code><strong>noteRepository</strong></code>
-            a záznam na který bylo klinuto předává funkci jako parametr (Né element záznamu jaký je vykreslený na stránkce, ale
-            <code><strong>key</strong></code>
-            tedy jednoznačný identifikátor konkrétního záznamu). V případě, že funkce
+            volá funkci ze souboru noteRepository.js a záznamu na něž bylo kliknuto předává funkci jako parametr, opět ne samotný element záznamu jaký je vykreslený na stránce, ale hodnotu „key“ tedy jednoznačný identifikátor konkrétního záznamu. v případě, že funkce
             <code><strong>noteRepository.remove()</strong></code>
             vrátí chybu, tato funkce uživateli zobrazí výstražnou hlášku.
           </p>
@@ -474,9 +512,9 @@ remove ({key}, onComplete) {
 }
 			</pre>
 
-          <p>Funkce pouze odstraní položku z pole obsahující všechny záznamy.</p>
+          <p>Tato funkce pouze odstraní položku z pole obsahující všechny záznamy.</p>
 
-          <p>To ostraní záznamy z databáze, ale pro uživatele bude na stránce stále viditelný.</p>
+          <p>Tím odstraní zápis záznamu z databáze, ale pro uživatele bude na stránce stále viditelný.</p>
         </div>
 
         <div class="guide-item">
@@ -491,7 +529,7 @@ noteRepository.on('removed', ({key}) => {
 })
 			</pre>
 
-          <p>Poté co je záznam odstraněn z pole databáze, je vyvolána událost, jež ostraní reprezentaci oného záznamu zobrazovaného na stránce. Poté již záznam není součástí databáze a taktéž není viditelný pro uživatele.</p>
+          <p>Poté co je záznam odstraněn z pole databáze, je vyvolána událost, jež odstraní reprezentaci záznamu zobrazeného na stránce. v případě odstranění záznamu viditelné uživatelem se jedná o prosté smazání elementu ze stránky.</p>
         </div>
       </div>
     </div>
@@ -558,6 +596,7 @@ function notesInitCheck() {
       orderSort();
       filterAuthorInit();
       editBlock();
+      hideEmptyComment();
     }
   }, 100);
 }
@@ -639,9 +678,22 @@ function filterAuthorInit() {
 }
 
 function filterAuthor() {
-  $(".filter-current").click(function() {
-    $(".filter-list").removeClass("hidden");
-  });
+  console.log("teď");
+
+  if (!$("body").hasClass("bound")) {
+    $("body").addClass("bound");
+    document.addEventListener(
+      "click",
+      function(event) {
+        if (event.target.classList.contains("filter-current") && $(".filter-list").hasClass("hidden")) {
+          $(".filter-list").removeClass("hidden");
+        } else {
+          $(".filter-list").addClass("hidden");
+        }
+      },
+      false
+    );
+  }
 
   $(".filter-item").click(function() {
     $(".filter-list").addClass("hidden");
@@ -683,6 +735,16 @@ function editBlock() {
       $(this)
         .find("button.delete")
         .remove();
+    }
+  });
+}
+
+function hideEmptyComment() {
+  $(".comment-author").each(function() {
+    if ($(this).text() === "") {
+      $(this)
+        .closest(".comment")
+        .addClass("hidden");
     }
   });
 }
