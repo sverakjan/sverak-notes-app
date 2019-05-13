@@ -220,6 +220,7 @@ export default {
 .comment-buttons {
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
 }
 
 .comment-buttons button {

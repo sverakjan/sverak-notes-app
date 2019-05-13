@@ -26,8 +26,10 @@ class NoteRepository extends EventEmitter {
   }
   // comments on a note
   comment({ key, title = "", content = "", comments = [], newcomment }, onComplete) {
-    if (comments[0][0] === "") {
-      comments.shift();
+    if (comments.length != 0) {
+      if (comments[0][0] === "") {
+        comments.shift();
+      }
     }
     comments.push([Auth.getAuth().currentUser.email, newcomment]);
     this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase

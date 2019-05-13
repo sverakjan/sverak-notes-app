@@ -1026,6 +1026,7 @@ function hideEmptyComment() {
 
   .guide-container {
     position: fixed;
+    height: calc(100% - 130px);
     top: 100px;
     right: 0;
     transition: transform 0.2s;
