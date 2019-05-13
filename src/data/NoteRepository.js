@@ -27,17 +27,26 @@ class NoteRepository extends EventEmitter {
   // comments on a note
   comment({ key, title = "", content = "", comments = [], newcomment }, onComplete) {
     if (comments[0][0] === "") {
-      //comments.shift(0);
+      comments.shift();
     }
     comments.push([Auth.getAuth().currentUser.email, newcomment]);
     this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
   }
 
-  // removeComments
+  // removeComment
   removeComment({ key, title = "", content = "", comments = [] }, commentId = 0, onComplete) {
-    console.log(comments);
     comments.splice(commentId, 1);
-    console.log(comments);
+    this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
+  }
+
+  // updateComment
+  updateComment({ key, title = "", content = "", comments = [], commentId, currentText }, onComplete) {
+    //console.log(currentText);
+    //console.log(commentId);
+
+    comments[commentId].pop();
+    comments[commentId].push(currentText); //tady na to mrkni potřebuješ ještě hloubš.
+
     this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
   }
 

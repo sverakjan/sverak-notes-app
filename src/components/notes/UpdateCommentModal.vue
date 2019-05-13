@@ -1,8 +1,7 @@
 <template>
-  <div v-if="note" transition="modal" class="backdrop" v-on:click="dismissModal">
-    <form class="edit-note" v-on:submit.prevent="update" v-on:click.stop="">
-      <input name="title" v-model="note.title" placeholder="Titulek" />
-      <textarea name="content" v-model="note.content" placeholder="Text záznamu" rows="8"></textarea>
+  <div v-if="notey" transition="modal" class="backdrop" v-on:click="dismissModal">
+    <form class="comment-note" v-on:submit.prevent="comment" v-on:click.stop="">
+      <textarea class="comment-textarea" name="comment" v-model="notey.currentText" placeholder="Text komentáře" rows="8"></textarea>
       <button type="submit">Uložit</button>
       <span v-on:click="dismissModal" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></span>
     </form>
@@ -11,23 +10,20 @@
 <script>
 import noteRepository from "../../data/NoteRepository";
 export default {
-  props: ["note"],
+  props: ["notey"],
   methods: {
-    remove() {
-      noteRepository.remove(this.note, err => {
-        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznam odstranit" });
-        this.dismissModal();
-      });
-    },
-    update() {
-      noteRepository.update(this.note, err => {
-        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznam aktualizovat" });
-        this.dismissModal();
-        this.$dispatch("alert", { type: "success", message: "Záznam byl upraven" });
-      });
+    comment() {
+      if ($(".comment-textarea").val() != "") {
+        noteRepository.updateComment(this.notey, err => {
+          if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se komentář upravit" });
+          this.dismissModal();
+          this.$dispatch("alert", { type: "success", message: "Komentář upraven" });
+        });
+      } else {
+      }
     },
     dismissModal() {
-      this.note = null;
+      this.notey = null;
     }
   }
 };
@@ -42,7 +38,7 @@ export default {
   background: rgba(50, 50, 50, 0.8);
   z-index: 10;
 }
-form.edit-note {
+form.comment-note {
   position: relative;
   width: 480px;
   max-width: calc(100% - 30px);
@@ -52,8 +48,8 @@ form.edit-note {
   border-radius: 7px;
   box-shadow: 0 1px 50px #555;
 }
-form.edit-note input,
-form.edit-note textarea {
+form.comment-note input,
+form.comment-note textarea {
   width: 100%;
   max-width: 100%;
   border: none;
@@ -64,15 +60,12 @@ form.edit-note textarea {
   margin-bottom: 20px;
 }
 
-form.edit-note input {
+form.comment-note textarea {
   padding-right: 25px;
-}
-
-form.edit-note textarea {
   margin-bottom: 40px;
 }
 
-form.edit-note button[type="submit"] {
+form.comment-note button[type="submit"] {
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -88,12 +81,12 @@ form.edit-note button[type="submit"] {
   font-size: 18px;
   transition: background-color 0.2s;
 }
-form.edit-note button[type="submit"]:hover {
+form.comment-note button[type="submit"]:hover {
   background: #43a047;
   color: white;
 }
 
-form.edit-note button {
+form.comment-note button {
   background: none;
   border: none;
   font-size: 20px;
@@ -104,11 +97,11 @@ form.edit-note button {
   padding: 5px 10px;
   transform: translateX(-5px) translateY(5px);
 }
-form.edit-note button:hover {
+form.comment-note button:hover {
   color: #d32f2f;
 }
 
-form.edit-note .close-modal {
+form.comment-note .close-modal {
   width: 40px;
   height: 40px;
   position: absolute;
@@ -123,7 +116,7 @@ form.edit-note .close-modal {
   color: #777;
 }
 
-form.edit-note .close-modal:hover {
+form.comment-note .close-modal:hover {
   color: #d32f2f;
 }
 

@@ -21,6 +21,7 @@
       <notes></notes>
       <update-modal :note.sync="selectedNote"></update-modal>
       <comment-modal :notex.sync="selectedNoteComment"></comment-modal>
+      <update-comment-modal :notey.sync="selectNoteUpdateComment"></update-comment-modal>
     </div>
     <span class="guide-button">
       <i class="fa fa-book"></i>
@@ -540,18 +541,21 @@ import Notes from "src/components/notes/Index";
 import CreateNoteForm from "src/components/notes/Create";
 import UpdateModal from "src/components/notes/UpdateModal";
 import CommentModal from "src/components/notes/CommentModal";
+import UpdateCommentModal from "src/components/notes/UpdateCommentModal";
 import { functions } from "firebase";
 export default {
   components: {
     Notes,
     CreateNoteForm,
     UpdateModal,
-    CommentModal
+    CommentModal,
+    UpdateCommentModal
   },
   data() {
     return {
       selectedNote: null,
-      selectedNoteComment: null
+      selectedNoteComment: null,
+      selectNoteUpdateComment: null
     };
   },
   events: {
@@ -560,6 +564,9 @@ export default {
     },
     "notex.selected": function(note) {
       this.selectedNoteComment = note;
+    },
+    "notey.selected": function(note) {
+      this.selectNoteUpdateComment = note;
     }
   }
 };

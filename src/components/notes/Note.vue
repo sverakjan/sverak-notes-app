@@ -11,10 +11,10 @@
 
         <div class="comment-buttons">
           <button class="edit-comment">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+            <i class="fa fa-pencil" aria-hidden="true" v-on:click="selectNoteUpdateComment(note)"></i>
           </button>
 
-          <button class="remove-comment" v-on:click="selectNoteRemoveComment(note, comment)">
+          <button class="remove-comment" v-on:click="selectNoteRemoveComment(note)">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </button>
         </div>
@@ -30,7 +30,7 @@
 <script>
 import noteRepository from "../../data/NoteRepository";
 export default {
-  props: ["note", "notex"],
+  props: ["note", "notex", "notey"],
   computed: {
     size() {
       let length = this.note.content.length;
@@ -73,6 +73,25 @@ export default {
         if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se komentář odebrat" });
         this.$dispatch("alert", { type: "success", message: "Komentář odebrán" });
       });
+    },
+    selectNoteUpdateComment({ key, title, content, comments }) {
+      var element = event.currentTarget.parentNode.parentNode.parentNode;
+
+      var siblings = [];
+      var sibling = element.parentNode.firstChild;
+
+      while (sibling !== element) {
+        if (sibling.nodeType === 1) {
+          siblings.push(sibling);
+        }
+        sibling = sibling.nextSibling;
+      }
+
+      var commentId = siblings.length;
+
+      var currentText = element.querySelector(".comment-content").textContent;
+
+      this.$dispatch("notey.selected", { key, title, content, comments, commentId, currentText });
     }
   }
 };

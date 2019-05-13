@@ -62,6 +62,7 @@ form.comment-note textarea {
 
 form.comment-note textarea {
   margin-bottom: 40px;
+  padding-right: 25px;
 }
 
 form.comment-note button[type="submit"] {
