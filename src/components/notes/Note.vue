@@ -8,6 +8,16 @@
       <div class="comment" v-for="comment in note.comments">
         <div class="comment-author">{{ comment[0] }}</div>
         <div class="comment-content">{{ comment[1] }}</div>
+
+        <div class="comment-buttons">
+          <button class="edit-comment">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+
+          <button class="remove-comment" v-on:click="selectNoteRemoveComment(note, comment)">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </div>
     <div class="note-buttons">
@@ -42,10 +52,27 @@ export default {
       this.$dispatch("note.selected", { key, title, content });
     },
     selectNoteComment({ key, title, content, comments }) {
-      // notify listeners that user selected a note
-      // pass in a copy of the note to prevent edits on the original note in the array
-
       this.$dispatch("notex.selected", { key, title, content, comments });
+    },
+    selectNoteRemoveComment({ key, title, content, comments }) {
+      var element = event.currentTarget.parentNode.parentNode;
+
+      var siblings = [];
+      var sibling = element.parentNode.firstChild;
+
+      while (sibling !== element) {
+        if (sibling.nodeType === 1) {
+          siblings.push(sibling);
+        }
+        sibling = sibling.nextSibling;
+      }
+
+      var commentId = siblings.length;
+
+      noteRepository.removeComment(this.note, commentId, err => {
+        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se komentář odebrat" });
+        this.$dispatch("alert", { type: "success", message: "Komentář odebrán" });
+      });
     }
   }
 };
@@ -173,6 +200,25 @@ export default {
 
 .comment-content {
   font-size: 15px;
+}
+
+.comment-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comment-buttons button {
+  margin: 0;
+  transform: none;
+  padding-bottom: 0;
+}
+
+.edit-comment:hover {
+  color: #66bb6a;
+}
+
+.remove-comment:hover {
+  color: #d32f2f;
 }
 
 @media (max-width: 1100px) {

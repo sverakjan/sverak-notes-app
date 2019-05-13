@@ -670,6 +670,10 @@ function filterAuthorInit() {
     }
   });
 
+  $(".filter-list-inner span").each(function() {
+    $(this).remove();
+  });
+
   for (var j = 0; j < namesArr.length; j++) {
     $(".filter-list-inner").append('<span class="filter-item">' + namesArr[j] + "</span>");
   }
@@ -678,8 +682,6 @@ function filterAuthorInit() {
 }
 
 function filterAuthor() {
-  console.log("teď");
-
   if (!$("body").hasClass("bound")) {
     $("body").addClass("bound");
     document.addEventListener(
@@ -734,6 +736,18 @@ function editBlock() {
         .remove();
       $(this)
         .find("button.delete")
+        .remove();
+    }
+  });
+
+  $(".comment").each(function() {
+    if (
+      $(this)
+        .find(".comment-author")
+        .text() != currentUser
+    ) {
+      $(this)
+        .find(".comment-buttons")
         .remove();
     }
   });

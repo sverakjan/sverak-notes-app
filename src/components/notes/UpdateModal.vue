@@ -4,6 +4,7 @@
       <input name="title" v-model="note.title" placeholder="Titulek" />
       <textarea name="content" v-model="note.content" placeholder="Text záznamu" rows="8"></textarea>
       <button type="submit">Uložit</button>
+      <span v-on:click="dismissModal" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></span>
     </form>
   </div>
 </template>
@@ -100,6 +101,25 @@ form.edit-note button {
   transform: translateX(-5px) translateY(5px);
 }
 form.edit-note button:hover {
+  color: #d32f2f;
+}
+
+form.edit-note .close-modal {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  transition: color 0.2s;
+  color: #777;
+}
+
+form.edit-note .close-modal:hover {
   color: #d32f2f;
 }
 
