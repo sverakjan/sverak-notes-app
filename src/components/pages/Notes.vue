@@ -704,7 +704,7 @@ function filterAuthor() {
     );
   }
 
-  $(".filter-item").click(function() {
+  $(document).on("click", ".filter-item", function() {
     $(".filter-list").addClass("hidden");
 
     var filteredEmail = $(this).text();

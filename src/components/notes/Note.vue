@@ -10,13 +10,9 @@
         <div class="comment-content">{{ comment[1] }}</div>
 
         <div class="comment-buttons">
-          <button class="edit-comment">
-            <i class="fa fa-pencil" aria-hidden="true" v-on:click="selectNoteUpdateComment(note)"></i>
-          </button>
+          <button class="edit-comment" v-on:click="selectNoteUpdateComment(note)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 
-          <button class="remove-comment" v-on:click="selectNoteRemoveComment(note)">
-            <i class="fa fa-trash" aria-hidden="true"></i>
-          </button>
+          <button class="remove-comment" v-on:click="selectNoteRemoveComment(note)"><i class="fa fa-trash" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
@@ -75,7 +71,7 @@ export default {
       });
     },
     selectNoteUpdateComment({ key, title, content, comments }) {
-      var element = event.currentTarget.parentNode.parentNode.parentNode;
+      var element = event.currentTarget.parentNode.parentNode;
 
       var siblings = [];
       var sibling = element.parentNode.firstChild;

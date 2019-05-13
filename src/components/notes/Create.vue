@@ -108,6 +108,7 @@ form.create-note button {
   outline: none;
   font-size: 18px;
   transition: background-color 0.2s;
+  user-select: none;
 }
 
 form.create-note button:hover {
