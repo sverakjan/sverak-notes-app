@@ -28,7 +28,7 @@ class NoteRepository extends EventEmitter {
   comment({ key, title = "", content = "", comments = [], newcomment }, onComplete) {
     if (comments.length != 0) {
       if (comments[0][0] === "") {
-        comments.shift();
+        //comments.shift();
       }
     }
     comments.push([Auth.getAuth().currentUser.email, newcomment]);

@@ -22,6 +22,18 @@
       <update-modal :note.sync="selectedNote"></update-modal>
       <comment-modal :notex.sync="selectedNoteComment"></comment-modal>
       <update-comment-modal :notey.sync="selectNoteUpdateComment"></update-comment-modal>
+
+      <div class="confirm-dialog">
+        <div class="confirm-dialog-inner">
+          <span class="confirm-notice">
+            Opravdu chcete komentář odstranit?
+          </span>
+          <div class="buttons">
+            <span class="button agree">Odstranit</span>
+            <span class="button dismiss">Zrušit</span>
+          </div>
+        </div>
+      </div>
     </div>
     <span class="guide-button">
       <i class="fa fa-book"></i>
@@ -1017,6 +1029,67 @@ function hideEmptyComment() {
   font-style: italic;
 }
 
+.confirm-dialog {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(50, 50, 50, 0.8);
+  z-index: 10;
+  display: none;
+}
+
+.confirm-dialog-inner {
+  position: relative;
+  width: 400px;
+  max-width: calc(100% - 30px);
+  margin: 25vh auto 0;
+  background: #fff;
+  padding: 15px;
+  border-radius: 7px;
+  box-shadow: 0 1px 50px #555;
+}
+
+.confirm-dialog .confirm-notice {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  display: block;
+}
+
+.confirm-dialog .buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-dialog .button {
+  right: 10px;
+  bottom: 10px;
+  transform: none;
+  background: #66bb6a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  outline: none;
+  font-size: 18px;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+.confirm-dialog .button:hover {
+  background: #43a047;
+}
+
+.confirm-dialog .dismiss {
+  background: #cfd8dc;
+  color: black;
+}
+
+.confirm-dialog .dismiss:hover {
+  background: #b0bec5;
+}
+
 @media (max-width: 1400px) {
   .app-container {
     width: 100%;
@@ -1026,7 +1099,7 @@ function hideEmptyComment() {
 
   .guide-container {
     position: fixed;
-    height: calc(100% - 130px);
+    height: calc(100% - 130p x);
     top: 100px;
     right: 0;
     transition: transform 0.2s;

@@ -12,7 +12,7 @@
         <div class="comment-buttons">
           <button class="edit-comment" v-on:click="selectNoteUpdateComment(note)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 
-          <button class="remove-comment" v-on:click="selectNoteRemoveComment(note)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          <button class="remove-comment" v-on:click="confirmDialog(note)"><i class="fa fa-trash" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
@@ -25,6 +25,7 @@
 </template>
 <script>
 import noteRepository from "../../data/NoteRepository";
+import { functions } from "firebase";
 export default {
   props: ["note", "notex", "notey"],
   computed: {
@@ -50,8 +51,30 @@ export default {
     selectNoteComment({ key, title, content, comments }) {
       this.$dispatch("notex.selected", { key, title, content, comments });
     },
-    selectNoteRemoveComment({ key, title, content, comments }) {
+    confirmDialog(note) {
+      $(".confirm-dialog").fadeIn();
+      $(".confirm-dialog .agree").off("click");
+
+      var thisNote = this;
       var element = event.currentTarget.parentNode.parentNode;
+
+      console.log(element.querySelector(".comment-content"));
+
+      $(".confirm-dialog .agree").click(function() {
+        element = element;
+        console.log(element.querySelector(".comment-content"));
+        thisNote.selectNoteRemoveComment(note, element);
+        $(".confirm-dialog").fadeOut();
+      });
+
+      $(".confirm-dialog .dismiss").click(function() {
+        $(".confirm-dialog").fadeOut();
+        return;
+      });
+    },
+
+    selectNoteRemoveComment({ key, title, content, comments }, element) {
+      console.log(element.querySelector(".comment-content"));
 
       var siblings = [];
       var sibling = element.parentNode.firstChild;
@@ -70,6 +93,7 @@ export default {
         this.$dispatch("alert", { type: "success", message: "Komentář odebrán" });
       });
     },
+
     selectNoteUpdateComment({ key, title, content, comments }) {
       var element = event.currentTarget.parentNode.parentNode;
 
@@ -201,7 +225,7 @@ export default {
 }
 
 .comment.hidden {
-  opacity: 0;
+  display: none;
 }
 
 .comment-author {
