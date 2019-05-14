@@ -23,10 +23,24 @@
       <comment-modal :notex.sync="selectedNoteComment"></comment-modal>
       <update-comment-modal :notey.sync="selectNoteUpdateComment"></update-comment-modal>
 
-      <div class="confirm-dialog">
+      <div class="confirm-dialog confirm-dialog-comment">
         <div class="confirm-dialog-inner">
           <span class="confirm-notice">
             Opravdu chcete komentář odstranit?
+          </span>
+          <div class="buttons">
+            <span class="button agree">Odstranit</span>
+            <span class="button dismiss">Zrušit</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="confirm-dialog confirm-dialog-note">
+        <div class="confirm-dialog-inner">
+          <span class="confirm-notice">
+            Opravdu chcete záznam odstranit?
+            <br />
+            <small>(Včetně komentářů vztahujících se k záznamu)</small>
           </span>
           <div class="buttons">
             <span class="button agree">Odstranit</span>

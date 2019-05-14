@@ -12,12 +12,12 @@
         <div class="comment-buttons">
           <button class="edit-comment" v-on:click="selectNoteUpdateComment(note)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 
-          <button class="remove-comment" v-on:click="confirmDialog(note)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          <button class="remove-comment" v-on:click="confirmDialogComment(note)"><i class="fa fa-trash" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
     <div class="note-buttons">
-      <button class="delete" type="button" v-on:click.stop="remove"><i class="fa fa-trash" aria-hidden="true"></i></button>
+      <button class="delete" type="button" v-on:click.stop="confirmDialogNote(note)"><i class="fa fa-trash" aria-hidden="true"></i></button>
       <button class="edit" type="button" v-on:click="selectNote(note)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
       <button class="comment" type="button" v-on:click="selectNoteComment(note)"><i class="fa fa-comments" aria-hidden="true"></i></button>
     </div>
@@ -38,9 +38,26 @@ export default {
     }
   },
   methods: {
-    remove() {
+    confirmDialogNote(note) {
+      $(".confirm-dialog-note").fadeIn();
+      $(".confirm-dialog-note .agree").off("click");
+
+      var thisNote = this;
+
+      $(".confirm-dialog-note .agree").click(function() {
+        thisNote.remove(note);
+        $(".confirm-dialog-note").fadeOut();
+      });
+
+      $(".confirm-dialog-note .dismiss").click(function() {
+        $(".confirm-dialog-note").fadeOut();
+        return;
+      });
+    },
+    remove(note) {
       noteRepository.remove(this.note, err => {
-        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznamu odstranit" });
+        if (err) return this.$dispatch("alert", { type: "error", message: "Nepodařilo se záznam odebrat" });
+        this.$dispatch("alert", { type: "success", message: "Záznam odebrán" });
       });
     },
     selectNote({ key, title, content }) {
@@ -51,31 +68,26 @@ export default {
     selectNoteComment({ key, title, content, comments }) {
       this.$dispatch("notex.selected", { key, title, content, comments });
     },
-    confirmDialog(note) {
-      $(".confirm-dialog").fadeIn();
-      $(".confirm-dialog .agree").off("click");
+    confirmDialogComment(note) {
+      $(".confirm-dialog-comment").fadeIn();
+      $(".confirm-dialog-comment .agree").off("click");
 
       var thisNote = this;
       var element = event.currentTarget.parentNode.parentNode;
 
-      console.log(element.querySelector(".comment-content"));
-
-      $(".confirm-dialog .agree").click(function() {
+      $(".confirm-dialog-comment .agree").click(function() {
         element = element;
-        console.log(element.querySelector(".comment-content"));
         thisNote.selectNoteRemoveComment(note, element);
-        $(".confirm-dialog").fadeOut();
+        $(".confirm-dialog-comment").fadeOut();
       });
 
-      $(".confirm-dialog .dismiss").click(function() {
-        $(".confirm-dialog").fadeOut();
+      $(".confirm-dialog-comment .dismiss").click(function() {
+        $(".confirm-dialog-comment").fadeOut();
         return;
       });
     },
 
     selectNoteRemoveComment({ key, title, content, comments }, element) {
-      console.log(element.querySelector(".comment-content"));
-
       var siblings = [];
       var sibling = element.parentNode.firstChild;
 
