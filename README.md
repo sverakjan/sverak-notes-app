@@ -2,13 +2,13 @@
 
 ## Build Setup
 
-``` bash
-# install dependencies
+```bash
+# instalace závislostí / install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# server s automatickým obnovováním na localhost:8080 / serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
+# kompilace pro produkci s minifikací / build for production with minification
 npm run build
 ```
