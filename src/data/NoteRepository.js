@@ -2,13 +2,11 @@ import firebase from "./firebase";
 import EventEmitter from "events";
 import Auth from "../data/Auth";
 
-// extend EventEmitter so user of NoteRepository can react to our own defined events (ex: noteRepository.on('added'))
 class NoteRepository extends EventEmitter {
   get uid() {
     return this.ref.getAuth().uid;
   }
   get notesRef() {
-    //return this.ref.child(`users/${this.uid}/notes`)
     return firebase.database().ref(`notes`);
   }
   constructor() {
@@ -21,35 +19,28 @@ class NoteRepository extends EventEmitter {
   }
   // updates a note
   update({ key, title = "", content = "" }, onComplete) {
-    //content = Auth.getAuth().currentUser.email + ": " + content;
-    this.notesRef.child(key).update({ title, content }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
+    this.notesRef.child(key).update({ title, content }, onComplete);
   }
   // comments on a note
   comment({ key, title = "", content = "", comments = [], newcomment }, onComplete) {
     if (comments.length != 0) {
-      if (comments[0][0] === "") {
-        //comments.shift();
-      }
     }
     comments.push([Auth.getAuth().currentUser.email, newcomment]);
-    this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
+    this.notesRef.child(key).update({ title, content, comments }, onComplete);
   }
 
   // removeComment
   removeComment({ key, title = "", content = "", comments = [] }, commentId = 0, onComplete) {
     comments.splice(commentId, 1);
-    this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
+    this.notesRef.child(key).update({ title, content, comments }, onComplete);
   }
 
   // updateComment
   updateComment({ key, title = "", content = "", comments = [], commentId, currentText }, onComplete) {
-    //console.log(currentText);
-    //console.log(commentId);
-
     comments[commentId].pop();
-    comments[commentId].push(currentText); //tady na to mrkni potřebuješ ještě hloubš.
+    comments[commentId].push(currentText);
 
-    this.notesRef.child(key).update({ title, content, comments }, onComplete); // key is used to find the child, a new note object is made without the key, to prevent key being inserted in Firebase
+    this.notesRef.child(key).update({ title, content, comments }, onComplete);
   }
 
   // removes a note
@@ -82,9 +73,7 @@ class NoteRepository extends EventEmitter {
     let note = this.snapshotToNote(snapshot);
     this.emit("changed", note);
   }
-  // processes the snapshots to consistent note with key
   snapshotToNote(snapshot) {
-    // we will need the key often, so we always want to have the key included in the note
     let key = snapshot.key;
     let note = snapshot.val();
     note.key = key;
@@ -99,4 +88,4 @@ class NoteRepository extends EventEmitter {
     return notes.find(note => note.key === key);
   }
 }
-export default new NoteRepository(); // this instance will be shared across imports
+export default new NoteRepository();
