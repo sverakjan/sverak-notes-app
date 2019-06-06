@@ -951,6 +951,7 @@ function hideEmptyComment() {
   right: 0;
   overflow-y: scroll;
   box-shadow: -5px 0 10px 0 rgba(0, 0, 0, 0.05);
+	border-left: 1px solid black;
 }
 
 .item-section {

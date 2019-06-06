@@ -71,6 +71,7 @@ form.create-note {
   width: 550px;
   height: 200px;
   background: #fff;
+  border: 1px solid black;
 
   margin: 0 auto;
   margin-bottom: 20px;

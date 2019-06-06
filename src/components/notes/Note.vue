@@ -131,6 +131,7 @@ export default {
 <style>
 .note {
   background: #fff;
+  border: 1px solid black;
   border-radius: 7px;
   box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -234,6 +235,7 @@ export default {
   background-color: #f5f5f5;
   border-radius: 4px;
   padding: 10px 8px;
+  border: 1px solid black;
 }
 
 .comment.hidden {
